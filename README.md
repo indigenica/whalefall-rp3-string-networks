@@ -25,12 +25,13 @@ OpenMP for the lattice kernel (compiled on first use into `network/_build/`). Te
 ```bash
 make test      # kernel tests, incl. a bit-level reproduction of a stored 128^3 U2 run (~1 min)
 make audit     # independent re-implementation of every estimator over the stored networks (audit/u4_u11/)
+make numbers   # every number quoted in main.tex, recomputed from the stored results
 make figures   # paper figures from the stored network summaries
 make paper     # paper/prd_network/main.pdf
 make validate  # kernel validations V1-V4 (linear spectrum, string detector, energy conservation, estimator)
 ```
 
-`make test audit figures` runs in a few minutes on a laptop and is what CI runs. The audit rewrites
+`make test audit numbers figures` runs in a few minutes on a laptop and is what CI runs. The audit rewrites
 `audit/u4_u11/a1_network.json`; `git diff` on that file should be empty.
 
 **Production runs.** `make network-u2` and `make network-u3` reproduce the 256³ networks (a few CPU hours, ~1.5 GB).

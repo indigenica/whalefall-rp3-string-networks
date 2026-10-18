@@ -1,0 +1,198 @@
+"""Every number quoted in main.tex, recomputed from the versioned result files and looked up in the manuscript itself.
+
+    python3 -B paper/prd_network/paper_numbers.py          # exit 1 if anything does not match
+
+Each row computes the values from the stored results, rounds them as the text does, fills them into the LaTeX
+fragment where the paper quotes them, and checks that this exact fragment is in main.tex (whitespace-insensitive).
+So the check fails if the results change, if the text changes, or if the two disagree. A second check lists every
+number in the text (abstract to conclusions) that no row and no entry of SETUP accounts for, so a new quoted number
+cannot slip in unchecked. The export carries this script (`make numbers` in the paper repository)."""
+import json, math, re, sys
+from pathlib import Path
+
+import numpy as np
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+R = ROOT / "network" / "results"
+
+
+def J(rel):
+    return json.loads((R / rel).read_text())
+
+
+U4B, U6, U9, U9X = J("u4/U4B_RESULT.json"), J("u4/U6_RESULT.json"), J("u4/U9_RESULT.json"), J("u4/U9_EXTRA.json")
+U10A, U10AX, V5 = J("u4/U10A_RESULT.json"), J("u4/U10A_EXTRA.json"), J("u4/U10A_V5.json")
+U10B, U11, T7 = J("u4/U10B_RESULT.json"), J("u4/U11_RESULT.json"), J("u4/T7_DRAIN_FADE.json")
+U16, U18, VAL = J("u16/U16_RESULT.json"), J("u18/U18_RESULT.json"), J("u2/validation.json")
+AUD = json.loads((ROOT / "audit" / "u4_u11" / "a1_network.json").read_text())
+
+
+def pm(v, e, d=2):
+    return f"{v:.{d}f}±{e:.{d}f}"
+
+
+def pct(x, d=0, sign=False):
+    return f"{x * 100:{'+' if sign else ''}.{d}f}%"
+
+
+def memory_384(l_ref=4.96):
+    """U(1) initial-condition memory at 384^3 (cloud test, ell_ref = ell_end - 0.3), as in INFORME_U4"""
+    rows = []
+    for xi in ("0.25", "2"):
+        run = J(f"u4/cloud_N384/U1_N384_s61_xi{xi}.json")
+        e = np.array([r["ell"] for r in run["rows"] if "xi" in r]); x = np.array([r["xi"] for r in run["rows"] if "xi" in r])
+        rows.append(np.interp(l_ref, e, x))
+    return abs(rows[1] - rows[0]) / np.mean(rows)
+
+
+qv = {k: v["variants"] for k, v in AUD["q_variants"].items()}
+pub_conv = "a,H del instante final del par (como el publicado)"
+two_seed = [q["q0_at_ell5"] for k in ("U9 q_RP3 densas", "U10a q_RP3 densas", "U10a q_RP3 poco densas") for q in qv[k].values()]
+two_seed_shift = max(max(abs(q["q0_at_ell5"] - qv[k][pub_conv]["q0_at_ell5"]) for q in qv[k].values())
+                     for k in ("U9 q_RP3 densas", "U10a q_RP3 densas"))
+r1, r6 = U18["cases"]["r1"], U18["cases"]["r0.6"]
+dres = U16["delta_resolution"]; vol = U16["volume"]; am1 = U16["amendment1_r0.5"]["delta"]
+u1_576_slope = float(np.mean(U6["xi_slope"]["U1"]))
+
+
+def r2(x):
+    return f"{x:.2f}"
+
+
+def P(x, d=0):
+    return f"{x * 100:.{d}f}"
+
+
+def SP(x, d=0):
+    return f"{x * 100:+.{d}f}"
+
+
+v5 = V5["V5"][1]["rel_err"]
+mem384 = memory_384()
+e_RP3 = U9X["conversion"]["emission_dense_over_sparse"]["RP3_raw"]["value"]
+e_U1 = U9X["conversion"]["emission_dense_over_sparse"]["U1_raw"]["value"]
+bath_RP3 = 1 - U11["drained_over_undrained_by_seed"]["RP3"]["mean"]
+bath_U1 = 1 - U11["drained_over_undrained_by_seed"]["U1"]["mean"]
+per_len = max(abs(1 - U10B[k]["R_Gamma_over_R_xi"]) for k in ("emission_low", "emission_ab"))
+RG, RGs = U11["R_Gamma"]["value"], U11["R_Gamma"]["boot_std"]
+q_shift = max(q["q0_at_ell5"] for q in qv["U11 q_RP3"].values()) - qv["U11 q_RP3"][pub_conv]["q0_at_ell5"]
+coll = [v["ell_min_after_collapse"] for v in U9X["from_above"].values()]
+qm, qs = qv["U11 q_RP3"]["a,H medios geométricos (base del auditor)"], qv["U11 q_RP3"]["a,H del instante inicial del par"]
+qF = qv["U11 q_RP3"]["ajuste ponderado por F"]
+
+# (where, what, values from the results, LaTeX fragment of main.tex with {} for each value, source)
+ROWS = [
+    # abstract
+    ("abstract", "R_xi bracket from both sides", (r2(U10B["R_xi_bracket_end"]["high"]), r2(U10B["R_xi_bracket_end"]["low"])), r"bracket it to $\Rxi\in[{},{}]$", "U10B"),
+    ("abstract", "bath share, sparse starts", (P(bath_RP3), P(bath_U1)), r"It is ${}\%$ ($\RP$) and ${}\%$ (U(1))", "U11"),
+    ("abstract", "R_Gamma stat / sampling", (r2(RG), r2(RGs), r2(0.05 * RG)), r"$\RG={}\pm{}\,({{\rm stat}})\pm{}\,({{\rm sampling}})$, independent", "U11, U18"),
+    ("abstract", "protocol gap, drained", (P(U10A["gap_G"]),), r"within $\approx{}\%$", "U10A"),
+    ("abstract", "per unit length", (P(per_len),), r"the emission per unit string length is within ${}\%$", "U10B"),
+    ("abstract", "q and its convention shift", (r2(U11["q_RP3"]["q0_at_ell5"]), r2(U11["q_RP3"]["q0_std"]), r2(q_shift)), r"is $q={}\pm{}$ with our estimator, but an independent re-implementation shows that the convention used to map the physical fitting window onto lattice momenta shifts it by up to ${}$", "U11, audit"),
+    # §2
+    ("§2", "V1: maximum energy offset", (P(max(VAL["V1"][m]["max_rel_drift"] for m in ("RP3", "U1")), 1),), r"departs from its initial value by up to ${}\%$", "u2/validation.json V1"),
+    ("§2", "V1: secular drift below 1e-3", ("3" if max(VAL["V1"][m]["secular_drift_after_first_block"] for m in ("RP3", "U1")) < 1e-3 else "?",), r"the subsequent secular drift is below $10^{{-{}}}$", "u2/validation.json V1"),
+    ("§2", "halving dtau changes R_Gamma by", (f"{J('u2/U2_RESULT.json')['systematics']['timestep_D']['delta']:.3f}",), r"halving it in a $128^3$ test changes $\RG$ by ${}$", "U2_RESULT systematics"),
+    ("§2", "V2: linear spectrum", (f"{max(v['rel_err'] for v in VAL['V2'].values()):.0e}".split("e-0")[0],), r"reproduced to ${}\times10^{{-5}}$", "u2/validation.json V2"),
+    ("§2", "V4: string-free Goldstone energy", (P(VAL["V4"]["RP3"]["comoving_energy_spread"], 1),), r"the comoving Goldstone energy is conserved to ${}\%$", "u2/validation.json V4"),
+    ("§2", "U16: R_xi, 1 -> 0.6", (f"{dres['R_xi']['rel'] * 100:.2f}", f"{dres['R_xi']['sigma'] / dres['R_xi']['ref_r1'] * 100:.2f}"), r"changes $\Rxi$ by ${}\pm{}\%$ between", "U16"),
+    ("§2", "U16: R_xi at 0.5", (P(am1["R_xi"]["rel"], 1),), r"and by ${}\%$ at $m_r a\,dx=0.5$", "U16 amendment 1"),
+    ("§2", "U16: local R_Gamma at 0.6 / 0.5", (SP(dres["R_Gamma"]["rel"], 1), SP(am1["R_Gamma"]["rel"])), r"(${}\%$ at $0.6$, ${}\%$ at $0.5$)", "U16"),
+    ("§2", "U18: dense sampling, local vs integral", ("1" if max(abs(c["R_Gamma_local_dense"] / c["R_Gamma_int_dense"] - 1) for c in (r1, r6)) < 0.01 else "?",), r"local and integral estimators agree to $<{}\%$", "U18"),
+    ("§2", "U18: dense sampling, change 1 -> 0.6", (P(r6["R_Gamma_local_dense"] / r1["R_Gamma_local_dense"] - 1), P(r6["R_Gamma_int_dense"] / r1["R_Gamma_int_dense"] - 1, 1)), r"change by ${}\%$ and ${}\%$ between", "U18"),
+    ("§2", "U18: 30 snapshots, local", (SP(r1["R_Gamma_local_30"] / r1["R_Gamma_local_dense"] - 1, 1), SP(r6["R_Gamma_local_30"] / r6["R_Gamma_local_dense"] - 1, 1)), r"departs from its densely sampled value by ${}\%$ and ${}\%$", "U18"),
+    ("§2", "U18: 30 snapshots, integral", (P(min(c["R_Gamma_int_30"] / c["R_Gamma_int_dense"] - 1 for c in (r1, r6))),), r"the integral one by up to ${}\%$", "U18"),
+    ("§2", "U18 -> sampling systematic", (P(0.05),), r"add a $\pm{}\%$ sampling systematic", "U18"),
+    ("§2", "U16: volume", (f"{(3.33 / 2) ** 3:.1f}", f"{vol['R_xi']['delta'] / vol['R_xi']['L2'] * 100:.1f}", f"{vol['R_xi']['sigma'] / vol['R_xi']['L2'] * 100:.1f}",
+                           f"{vol['R_Gamma']['delta'] / vol['R_Gamma']['L2'] * 100:+.1f}", f"{vol['R_Gamma']['sigma'] / vol['R_Gamma']['L2'] * 100:.1f}"),
+     r"A box with ${}$ times more Hubble volumes changes $\Rxi$ and $\RG$ by ${}\pm{}\%$ and ${}\pm{}\%$", "U16 volume (L = 3.33 vs 2)"),
+    # §3.1
+    ("§3.1", "U(1) memory at 256^3", (P(U4B["ic_memory_trend"][0]["ic_memory"]),), r"the U(1) control kept a ${}\%$ memory", "U4B"),
+    ("§3.1", "U(1) xi and memory at 768^3", (r2(U4B["blocks"][1]["xi_U1_ref"]["mean"]), P(U4B["ic_memory_trend"][1]["ic_memory"], 1)), r"$\xi_{{\rm U(1)}}(5.65)={}\in[0.5,2.5]$ and a memory $|\xi(\xi_i{{=}}2)-\xi(\xi_i{{=}}0.25)|/\bar\xi={}\%<20\%$", "U4B"),
+    ("§3.1", "memory trend", (P(U4B["ic_memory_trend"][0]["ic_memory"]), P(mem384), P(U4B["ic_memory_trend"][1]["ic_memory"], 1)), r"(${}\%$, ${}\%$, ${}\%$ at $256^3$, $384^3$, $768^3$)", "U4B; cloud_N384"),
+    # §3.2
+    ("§3.2", "R_xi sparse (U6)", (f"{U6['R_xi']['value']:.3f}", f"{U6['R_xi']['boot_std']:.3f}"), r"$\Rxi={}\pm{}$", "U6"),
+    ("§3.2", "dxi/dell RP3 vs U(1)", (r2(U9["slope_RP3"]["mean_sparse"]), r2(u1_576_slope)), r"($d\xi/d\ell={}$ against ${}$)", "U9; U6"),
+    ("§3.2", "dense starts", ("5" if max(U9["xi_RP3_ref"]["memory"], abs(U9["slope_RP3"]["mean_dense"] / U9["slope_RP3"]["mean_sparse"] - 1)) < 0.05 else "?",
+                             r2(U9["R_xi_dense"]["value"]), r2(U9["R_xi_dense"]["boot_std"]), f"{min(coll):.1f}", f"{max(coll):.1f}"),
+     r"give the same density and slope within ${}\%$ ($\Rxi={}\pm{}$), but all collapse below their final density at $\ell\approx{}$--${}$", "U9, U9_EXTRA"),
+    ("§3.2", "late dense / sparse slopes", (r2(U10B["RP3"]["slope_ab"]), r2(U10B["U1"]["slope_ab"]), f"{U10B['RP3']['slope_low']:+.2f}", f"{U10B['U1']['slope_low']:+.2f}"),
+     r"($d\xi/d\ell={}$ for $\RP$, ${}$ for U(1)), while the sparse starts increase (${}$, ${}$)", "U10B"),
+    ("§3.2", "bracket at ell = 5.61", (r2(U10B["RP3"]["xi_low_end"]), r2(U10B["RP3"]["xi_ab_end"]), r2(U10B["U1"]["xi_low_end"]), r2(U10B["U1"]["xi_ab_end"]),
+                                       r2(U10B["R_xi_bracket_end"]["high"]), r2(U10B["R_xi_bracket_end"]["low"])),
+     r"bracketed to $[{},{}]$ for $\RP$ and $[{},{}]$ for U(1), and the ratio is the same from both sides, $\Rxi\in[{},{}]$", "U10B"),
+    # §3.3
+    ("§3.3", "dense/sparse emission and rho_M/rho_a", (r2(e_RP3), r2(e_U1), P(U9X["relaxation"]["RP3"]["rel_at_end"]), P(U9X["relaxation"]["U1"]["rel_at_end"])),
+     r"($\times{}$ for $\RP$, $\times{}$ for U(1)), with a bluer spectrum, and end the window with a ${}$--${}\%$ larger ratio", "U9_EXTRA"),
+    ("§3.3", "exchange closes a string-free U(1) budget to", (P(v5),), r"closes the Goldstone energy budget of a string-free box to ${}\%$", "U10A_V5"),
+    ("§3.3", "dense U(1): drain / exchange", (P(U10AX["U1_dense_two_methods"]["retained_after_drain"]), P(U10AX["U1_dense_two_methods"]["one_minus_fX_undrained"])),
+     r"the drain leaves ${}\%$ of the emission, and the undrained exchange attributes ${}\%$ to the strings", "U10A_EXTRA"),
+    ("§3.3", "dense RP3, informative (512 drained / 576 undrained)", (P(U10AX["emission_ratio"]["Rdd/R9"]),), r"it gives the same picture: ${}\%$ of the emission remains", "U10A_EXTRA Rdd/R9"),
+    ("§3.3", "drained/undrained per seed", (r2(1 - bath_RP3), r2(U11["drained_over_undrained_by_seed"]["RP3"]["std"]), r2(1 - bath_U1), r2(U11["drained_over_undrained_by_seed"]["U1"]["std"]), P(bath_RP3), P(bath_U1)),
+     r"the drain leaves ${}\pm{}$ of the $\RP$ emission and ${}\pm{}$ of the U(1) one: the bath was ${}\%$ and ${}\%$", "U11"),
+    ("§3.3", "undrained R_Gamma", (r2(U11["R_Gamma_U6_same_window"]["value"]), r2(U11["R_Gamma_U6_same_window"]["boot_std"])), r"the undrained $\RG={}\pm{}$ was biased low", "U11"),
+    ("§3.3", "drained U(1) exchange below", (f"{math.ceil(max(abs(v) for v in U11['f_X_U1'].values()) * 200) / 2:.1f}",), r"the measured exchange is below ${}\%$", "U11 f_X_U1"),
+    ("§3.3", "fading of the bath", (r2(T7["models"]["RP3"]["slope_mean"]), r2(T7["models"]["RP3"]["slope_sem"]), r2(T7["models"]["U1"]["slope_mean"]), r2(T7["models"]["U1"]["slope_sem"])),
+     r"rises by ${}\pm{}$ per unit $\ell$ (U(1): ${}\pm{}$)", "T7"),
+    # §3.4
+    ("§3.4", "R_Gamma and R_xi drained", (r2(RG), r2(RGs), r2(0.05 * RG), r2(U11["R_xi"]["value"]), r2(U11["R_xi"]["boot_std"])),
+     r"\RG={}\pm{}\,({{\rm stat}})\pm{}\,({{\rm sampling}}),\qquad \Rxi={}\pm{},", "U11, U18"),
+    ("§3.4", "R_Gamma total and exchange-corrected", (r2(RG), r2(math.hypot(RGs, 0.05 * RG)), r2(U11["R_Gamma_corr"]["value"]), r2(U11["R_Gamma_corr"]["boot_std"])),
+     r"that is $\RG={}\pm{}$ in total, and $\RG={}\pm{}\,({{\rm stat}})$", "U11"),
+    ("§3.4", "512^3 drained, sparse / dense, gaps", (r2(U10A["R_Gamma"]["drained_sparse"]["value"]), r2(U10A["R_Gamma"]["drained_sparse"]["boot_std"]),
+                                                    r2(U10A["R_Gamma"]["drained_dense"]["value"]), r2(U10A["R_Gamma"]["drained_dense"]["boot_std"]), P(U10A["gap_G"]), P(U10A["gap_U9"])),
+     r"the drained ratio is ${}\pm{}$ for sparse and ${}\pm{}$ for dense starts, a protocol gap of ${}\%$ against ${}\%$", "U10A"),
+    ("§3.4", "per unit length", (P(per_len), r2(U10B["emission_low"]["R_Gamma_over_R_xi"]), r2(U10B["emission_ab"]["R_Gamma_over_R_xi"])),
+     r"emits within ${}\%$ of U(1) from both sides of the attractor ($\RG/\Rxi={}$ from below, ${}$ from above)", "U10B"),
+    ("§3.4", "q and its trend", (r2(U11["q_RP3"]["q0_at_ell5"]), r2(U11["q_RP3"]["q0_std"]), r2((U11["q_RP3"]["q_end"] - U11["q_RP3"]["q0_at_ell5"]) / (U6["q_RP3"]["ell_end"] - 5)), r2(U11["q_RP3"]["q1_std"])),
+     r"$q_{{\RP}}(\ell=5)={}\pm{}$, with a weak decrease with $\ell$ ($dq/d\ell={}\pm{}$)", "U11"),
+    ("§3.4", "q by convention", (r2(qm["q0_at_ell5"]), r2(qm["q0_std"]), r2(qs["q0_at_ell5"]), r2(qs["q0_std"]), r2(qF["q0_at_ell5"]), r2(qF["q0_std"])),
+     r"give ${}\pm{}$ and ${}\pm{}$, and a fit weighted by $F$ gives ${}\pm{}$", "audit q_variants"),
+    ("§3.4", "two seeds", (f"{two_seed_shift:.1f}", f"{min(two_seed):.1f}", f"{max(two_seed):.1f}"), r"(by up to ${}$ for the dense starts), so earlier two-seed values should be read as $q\approx{}$--${}$", "audit (U9, U10a)"),
+    # §4, §5, conclusions
+    ("§4", "bath share in the discussion", (P(bath_U1),), r"A ${}\%$ contamination", "U11"),
+    ("§5", "verdict threshold quoted", ("1.69",), r"$\RG+\sigma\le{}$", "ESPEC_U11 (threshold, not a result)"),
+    ("§5", "audit reproduces to 1e-4", ("4" if abs(AUD["checks"][0]["audit"] / AUD["checks"][0]["published"] - 1) <= 1e-4 else "?",), r"to $\le10^{{-{}}}$ relative", "audit checks[0]"),
+    ("concl.", "per unit length, R_Gamma total", (P(per_len), r2(RG), r2(math.hypot(RGs, 0.05 * RG))), r"within ${}\%$ as efficiently, giving $\RG={}\pm{}$", "U10B, U11"),
+    ("concl.", "bath share", (P(bath_RP3), P(bath_U1)), r"(${}$--${}\%$ for sparse starts", "U11"),
+]
+
+# Numbers in the text that are set-up, parameters, definitions or literature values, not results of this work.
+SETUP = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30", "70", "100",
+         "128", "192", "256", "320", "384", "512", "576", "768",                     # lattice sizes
+         "0.24", "0.25", "0.5", "0.6", "0.75", "1.3", "0.05", "2.5", "3.5", "3.8", "4.6", "4.56",   # parameters, windows
+         "5.61", "5.65", "5.66", "5.95", "5.6", "1.5", "2.0", "1.6", "0.6", "8", "9",         # ell values, literature, round values
+         "1.69", "1e-3", "-3", "-5", "-4", "-1", "-0.05", "6e-05"}
+
+
+def manuscript():
+    t = (HERE / "main.tex").read_text(encoding="utf-8")
+    t = t[t.index(r"\begin{abstract}"):t.index(r"\bibliographystyle")]
+    t = re.sub(r"(?<!\\)%.*", "", t)
+    t = re.sub(r"\\(cite|ref|label|includegraphics)(\[[^]]*\])?\{[^}]*\}", "", t)   # citation keys carry years
+    return re.sub(r"\s+", " ", t)
+
+
+def main():
+    tex = manuscript()
+    bad, covered = 0, set()
+    w = max(len(r[1]) for r in ROWS)
+    for where, what, vals, frag, src in ROWS:
+        f = re.sub(r"\s+", " ", frag.format(*vals))
+        ok = f in tex
+        bad += not ok
+        covered.update(re.findall(r"\d+(?:\.\d+)?", f))
+        print(f"{'ok ' if ok else 'XX '} {where:8} {what:<{w}}  {' / '.join(vals):<34} [{src}]")
+        if not ok:
+            print(f"      not in main.tex: {f}")
+    loose = sorted({n for n in re.findall(r"\d+(?:\.\d+)?", tex)} - covered - SETUP - {n.lstrip("0") or "0" for n in SETUP}, key=float)
+    print(f"\n{len(ROWS)} quoted fragments checked against the results and the manuscript: {bad} do not match")
+    if loose:
+        print("Numbers in main.tex that no row checks and SETUP does not list (add a row or, if it is a parameter, list it):")
+        print("  " + ", ".join(loose))
+    sys.exit(1 if bad or loose else 0)
+
+
+if __name__ == "__main__":
+    main()

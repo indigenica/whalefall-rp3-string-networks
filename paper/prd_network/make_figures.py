@@ -27,7 +27,8 @@ g = np.linspace(L.math.log(288) - 1.3, L.math.log(288) - 0.05, 40)
 for mod, seeds, col in (("RP3", range(61, 67), BLUE), ("U1", range(61, 65), ORANGE)):
     for suf, ls, lab in (("_dr", "-", "drained (U11)"), ("", "--", "undrained (U6)")):
         E = np.array([L.on_grid(*L.emission(L.load(f"{mod}_N576_s{s}_xi0.5{suf}.json"))[::2], g) for s in seeds])
-        a.plot(g, np.nanmean(E, 0), ls=ls, color=col, label=f"{'$\\mathbb{{RP}}^3$' if mod == 'RP3' else 'U(1)'}, {lab}")
+        name = r"$\mathbb{RP}^3$" if mod == "RP3" else "U(1)"            # no backslash inside the f-string (Python < 3.12)
+        a.plot(g, np.nanmean(E, 0), ls=ls, color=col, label=f"{name}, {lab}")
 a.set_xlabel(r"$\ell=\ln(m_r/H)$"); a.set_ylabel(r"emission efficiency $\varepsilon$")
 a.legend(frameon=False, fontsize=7, loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=2); a.set_title("(a) the initial massive bath counted as emission", fontsize=9, loc="left", color=INK)
 

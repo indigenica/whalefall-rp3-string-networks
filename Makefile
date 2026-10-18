@@ -4,9 +4,9 @@ PY ?= python3
 export PYTHONDONTWRITEBYTECODE = 1
 export OMP_NUM_THREADS ?= 2
 
-.PHONY: all test validate audit figures paper clean network-u2 network-u3
+.PHONY: all test validate audit numbers figures paper clean network-u2 network-u3
 
-all: test audit figures         ## everything that runs in a few minutes on a laptop
+all: test audit numbers figures ## everything that runs in a few minutes on a laptop
 
 test:                           ## kernel tests: linear spectrum, Z2 detection, bit-level reproduction of a stored U2 run (~1 min; gcc + OpenMP)
 	$(PY) -B network/test_network.py
@@ -16,6 +16,9 @@ validate:                       ## kernel validations V1-V4 of the U2 specificat
 
 audit:                          ## independent re-implementation of the estimators over the stored networks; compares with the published numbers
 	cd audit/u4_u11 && $(PY) -B a0_units.py && $(PY) -B a1_network.py
+
+numbers:                        ## every number quoted in main.tex, recomputed from the stored results (exit 1 on any mismatch)
+	$(PY) -B paper/prd_network/paper_numbers.py
 
 figures:                        ## paper figures from the stored network summaries (fig_bracket.pdf, fig_bath.pdf)
 	$(PY) -B paper/prd_network/make_figures.py
