@@ -12,3 +12,4 @@ paper/**/*.out
 paper/**/*.blg
 paper/**/*.bbl
 paper/**/*.synctex.gz
+paper/**/*Notes.bib

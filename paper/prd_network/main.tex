@@ -1,17 +1,12 @@
-\documentclass[11pt,a4paper]{article}
-% Draft for Physical Review D (network paper).  Build: latexmk -pdf main.tex   (revtex not available here; switch class at submission)
-\usepackage[margin=2.4cm]{geometry}
+\documentclass[prd,twocolumn,superscriptaddress,nofootinbib,amsmath,amssymb]{revtex4-2}
+% Physical Review D (network paper).  Build: latexmk -pdf main.tex  (needs revtex4-2 and apsrev4-2: texlive-publishers)
 \usepackage[utf8]{inputenc}
-\usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{xcolor}
-\usepackage[numbers,sort&compress]{natbib}
 \usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
 \usepackage[expansion=false]{microtype}
-\usepackage{caption}
 \usepackage{orcidlink}
-\captionsetup{font=small,labelfont=bf}
 
 \newcommand{\RP}{\mathbb{RP}^3}
 \newcommand{\Ztwo}{\mathbb{Z}_2}
@@ -19,12 +14,13 @@
 \newcommand{\Rxi}{R_\xi}
 \newcommand{\todo}[1]{\textcolor{red}{[#1]}}
 
-\title{\textbf{Density and Goldstone emission of an $\RP\simeq{\rm SO}(3)$ global-string network relative to U(1), and a massive-bath systematic of the emission estimator}}
-\author{Jose Bautista\,\orcidlink{0009-0001-6655-4028}\thanks{\href{mailto:indigenica@gmail.com}{indigenica@gmail.com}}}
-\date{Draft, October 18, 2026}
-
 \begin{document}
-\maketitle
+
+\title{Density and Goldstone emission of an $\RP\simeq{\rm SO}(3)$ global-string network relative to U(1), and a massive-bath systematic of the emission estimator}
+\author{Jose Bautista\,\orcidlink{0009-0001-6655-4028}}
+\email{jozebautista@gmail.com}
+\affiliation{Independent researcher}
+\date{October 18, 2026}
 
 \begin{abstract}
 We simulate networks of global $\Ztwo$ strings whose vacuum manifold is $\RP\simeq{\rm SO}(3)$, produced by a real symmetric-tensor order parameter, and compare them with U(1) axion-string networks evolved in the same code, with the same Goldstone decay constant and core mass, at $576^3$ (U(1) control also at $768^3$, where it passes preregistered scaling gates).
@@ -35,6 +31,8 @@ With the bath drained, the emission ratio is $\RG=1.56\pm0.09\,({\rm stat})\pm0.
 The spectral slope of the $\RP$ emission at $\ell=5$ is $q=0.87\pm0.06$ with our estimator, but an independent re-implementation shows that the convention used to map the physical fitting window onto lattice momenta shifts it by up to $0.07$; we therefore quote $q$ as compatible with $1$.
 All verdict-bearing analyses were preregistered and are reproducible from the released data.
 \end{abstract}
+
+\maketitle
 
 %=====================================================================
 \section{Introduction}
@@ -106,12 +104,12 @@ They decrease through the whole window in both models ($d\xi/d\ell=-0.20$ for $\
 At $\ell=5.61$ the scaling density is bracketed to $[1.12,1.73]$ for $\RP$ and $[0.66,1.10]$ for U(1), and the ratio is the same from both sides, $\Rxi\in[1.57,1.68]$.
 The growth of sparse networks is therefore consistent with an approach from below, as argued for U(1) in Refs.~\cite{Correia2025spectrum,Correia2024terasite}; our window cannot distinguish a constant attractor from a slowly growing one.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{fig_bracket.pdf}
 \caption{The scaling attractor bracketed at $576^3$. Blue: drained networks starting sparse ($\xi_i=0.5$), approaching from below. Red: drained networks started late ($\ell_i=3.5$) and dense ($\xi_i=3$ solid, $6$ dashed), approaching from above. The shaded band is the analysis window.}
 \label{fig:bracket}
-\end{figure}
+\end{figure*}
 
 \subsection{The massive-bath systematic}
 
@@ -134,19 +132,20 @@ Within the window the bath contribution fades: the drained-to-undrained emission
 The drain removes a lattice artefact rather than part of the cosmological production: the massive modes decay at tree level well before the late epochs relevant for cosmology, into hard Goldstones that redshift as radiation.
 The systematic is, however, intrinsic to the kinetic estimator at accessible $\ell$, and it is larger for vacua with more massive modes.
 
-\begin{figure}[t]
+\begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{fig_bath.pdf}
 \caption{(a) Emission efficiency (seed means) of the sparse networks with the initial massive bath drained (solid) and of their undrained twins (dashed). (b) Spectral slope $q_{\RP}(\ell=5)$ with bootstrap errors for each data set, with the physical fitting window $[10H,m_r/4]$ converted to lattice momenta using $a$ and $H$ at the end, the geometric middle or the start of each snapshot pair.}
 \label{fig:bath}
-\end{figure}
+\end{figure*}
 
 \subsection{Bath-free emission and spectrum}
 
 With the bath drained (six $\RP$ and four U(1) seeds, $576^3$),
-\begin{equation}
-\RG=1.56\pm0.09\,({\rm stat})\pm0.08\,({\rm sampling}),\qquad \Rxi=1.61\pm0.06,
-\end{equation}
+\begin{align}
+\RG&=1.56\pm0.09\,({\rm stat})\pm0.08\,({\rm sampling}),\\
+\Rxi&=1.61\pm0.06,
+\end{align}
 that is $\RG=1.56\pm0.12$ in total, and $\RG=1.54\pm0.09\,({\rm stat})$ when the measured U(1) exchange is subtracted.
 At $512^3$ with two seeds per protocol the drained ratio is $1.63\pm0.02$ for sparse and $1.76\pm0.09$ for dense starts, a protocol gap of $7\%$ against $20\%$ without draining.
 Per unit string length the $\RP$ network emits within $13\%$ of U(1) from both sides of the attractor ($\RG/\Rxi=0.97$ from below, $0.87$ from above): there is no ``silent'' non-abelian network.
@@ -186,7 +185,7 @@ It is distinct from the contribution of the string fields themselves to the comm
 Each analysis was written as a dated specification (thresholds, windows, estimators, verdict logic) before the corresponding networks were produced, and later changes are dated amendments.
 The preregistered verdicts are: attractor gates passed for the U(1) control at $768^3$; genuine growth within the window for sparse and dense starts; an indeterminate verdict for the first drain test at $512^3$ (a residual massive excess); for the drained $576^3$ networks, an emission ratio below the threshold set by the cosmological application ($\RG+\sigma\le1.69$) and $q<1$ (the latter not robust, \S\ref{sec:results}); and a bracketed attractor in both models for the late dense starts.
 An independent audit re-implemented the estimators from the specifications alone, without reading the analysis code, and reproduced every density, emission and drain number of the production networks to $\le10^{-4}$ relative (the later resolution and sampling tests were not audited); it found the $q$ convention dependence reported above and a definitional difference in the per-seed exchange fraction with no effect on $\RG$.
-Code, network summaries, specifications, audits and figure scripts are public~\cite{whalefall_repo}.
+Code, network summaries, specifications, audits and figure scripts are public~\cite{rp3_repo}, and a script there recomputes every number quoted in this paper from the stored results and checks it against the text.
 
 \section{Conclusions}
 
@@ -194,7 +193,7 @@ A global-string network with vacuum manifold $\RP\simeq{\rm SO}(3)$ is $\approx1
 The bath, counted as emission by the standard kinetic estimator, is a sizeable systematic at accessible $\ell$ ($19$--$28\%$ for sparse starts, more than half for dense ones).
 The emission spectrum is close to scale invariant, with a slope at $\ell=5$ that is compatible with $1$ once the estimator convention is accounted for.
 
-\bibliographystyle{unsrtnat}
+\bibliographystyle{apsrev4-2}
 \bibliography{refs}
 
 \end{document}

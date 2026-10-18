@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this code or these data, please cite the paper below."
+title: "Code, network summaries, preregistered specifications, independent audit and figure scripts for: Density and Goldstone emission of an RP3 ~ SO(3) global-string network relative to U(1)"
+type: software
+authors:
+  - family-names: Bautista
+    given-names: Jose
+    email: jozebautista@gmail.com
+    orcid: "https://orcid.org/0009-0001-6655-4028"
+repository-code: "https://github.com/indigenica/whalefall-rp3-string-networks"
+license:
+  - GPL-3.0-or-later
+  - CC-BY-NC-4.0
+keywords:
+  - global strings
+  - topological defects
+  - lattice simulations
+  - axion strings
+  - Goldstone emission
+  - RP3
+preferred-citation:
+  type: article
+  title: "Density and Goldstone emission of an RP3 ~ SO(3) global-string network relative to U(1), and a massive-bath systematic of the emission estimator"
+  authors:
+    - family-names: Bautista
+      given-names: Jose
+      email: jozebautista@gmail.com
+      orcid: "https://orcid.org/0009-0001-6655-4028"
+  year: 2026
+  status: preprint
+  notes: "Zenodo DOI to be added on publication of the preprint."

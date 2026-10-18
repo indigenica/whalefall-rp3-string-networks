@@ -137,7 +137,7 @@ ROWS = [
      r"rises by ${}\pm{}$ per unit $\ell$ (U(1): ${}\pm{}$)", "T7"),
     # §3.4
     ("§3.4", "R_Gamma and R_xi drained", (r2(RG), r2(RGs), r2(0.05 * RG), r2(U11["R_xi"]["value"]), r2(U11["R_xi"]["boot_std"])),
-     r"\RG={}\pm{}\,({{\rm stat}})\pm{}\,({{\rm sampling}}),\qquad \Rxi={}\pm{},", "U11, U18"),
+     r"\RG&={}\pm{}\,({{\rm stat}})\pm{}\,({{\rm sampling}}),\\ \Rxi&={}\pm{},", "U11, U18"),
     ("§3.4", "R_Gamma total and exchange-corrected", (r2(RG), r2(math.hypot(RGs, 0.05 * RG)), r2(U11["R_Gamma_corr"]["value"]), r2(U11["R_Gamma_corr"]["boot_std"])),
      r"that is $\RG={}\pm{}$ in total, and $\RG={}\pm{}\,({{\rm stat}})$", "U11"),
     ("§3.4", "512^3 drained, sparse / dense, gaps", (r2(U10A["R_Gamma"]["drained_sparse"]["value"]), r2(U10A["R_Gamma"]["drained_sparse"]["boot_std"]),

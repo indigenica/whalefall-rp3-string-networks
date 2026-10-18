@@ -20,7 +20,7 @@ also at 768³), and measure:
 ## Reproduce
 
 Requirements: Python ≥ 3.10 with `numpy`, `scipy`, `matplotlib` (`pip install -r requirements.txt`), and `gcc` with
-OpenMP for the lattice kernel (compiled on first use into `network/_build/`). TeX Live with `latexmk` only for the PDF.
+OpenMP for the lattice kernel (compiled on first use into `network/_build/`). TeX Live with `latexmk` and `revtex4-2` (Debian/Ubuntu: `texlive-publishers`) only for the PDF.
 
 ```bash
 make test      # kernel tests, incl. a bit-level reproduction of a stored 128^3 U2 run (~1 min)
@@ -71,6 +71,8 @@ a toy cosmology in which this network feeds a dark-matter component. Nothing her
 `EXPORT_PROVENANCE.json` records the whalefall commit of each export and the hash of every file. Changes are made
 in whalefall and exported again; files are not edited here.
 
-## Citation
+## Citation and licence
 
-DOI to be assigned at the first release.
+Please cite the paper (`CITATION.cff`; Zenodo DOI to be added on publication of the preprint).
+
+Code: GPL-3.0-or-later. Paper, figures, data and documentation: CC BY-NC 4.0. Research and teaching use is free; commercial use of the text, figures or data, or use of the code in closed-source software, needs the author's permission. Details in `LICENSE.md`.
