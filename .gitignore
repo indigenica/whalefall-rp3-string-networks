@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.so
+_build/
+**/mpl_config/
+.DS_Store
+paper/**/*.aux
+paper/**/*.log
+paper/**/*.fls
+paper/**/*.fdb_latexmk
+paper/**/*.out
+paper/**/*.blg
+paper/**/*.bbl
+paper/**/*.synctex.gz

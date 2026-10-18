@@ -1,0 +1,102 @@
+{
+ "stage": "S3_sectors",
+ "provenance": {
+  "utc": "2026-10-17T20:44:38Z",
+  "python": "3.13.16",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "Linux-6.18.44-fc-v139-x86_64-with-glibc2.39",
+  "sources": {
+   "chain/figures.py": "9589f9b940cae2de6a5bc3d66df80cfb52436e5cf30f4a1d91a9ac545bdb1bd5",
+   "chain/run_all.py": "3812290f8e295d6c4ccd3577d610b8e24c240a07d3be78a8f708131e22ed4faf",
+   "chain/s1_birth.py": "03d528af0a8e528e4efe6b59b000e36653708f97ed988fe45ed558935c4b053c",
+   "chain/s2_pocket.py": "f00be54f3ca739ca0196e440f7a676f72d2f3aab28a09f51036f455ba1834a5e",
+   "chain/s3_sectors.py": "c7e0e49188534ebcd6b5a1bd1743e2681fba4001fb67f5e0b2374a69e1746af3",
+   "chain/s4_dark.py": "19f996ae87326aa2a0f1f1822d687d004ee4e9d91cb01313280999807dc7d253",
+   "chain/s5_closure.py": "b7d5e0001770d60190390081693c216e320883a84a4d98a42fbde7c8019bba91",
+   "chain/s6_measured.py": "f002cdf03613b222333db94f65cdc47fd7eda5314891a3bd6963cae0f93c3109",
+   "chain/u17_ksw.py": "cb486d813554c54810bc18fcf2f8bba48da7740e170eb74af06cbcbbc62e14c3",
+   "chain/u20_iso.py": "216a685e0405d30554497aef7e62667f92c015c50ac257f683dacf8fa79b12fc",
+   "chain/u20b_iso.py": "c5aa1113dc93370ce5a9131e9bf457d797f59c8c0c254ce83d97f3701283bbcb",
+   "chain/u22_pole.py": "50bb849ff67c43fa342c1007a08113cb53c7430f08a7424a609810408b9700b9",
+   "chain/u22b_births.py": "3ddbebc1805b5af4ca2d0f4075b89cd16490e5ae976aa92cfb1f5c3a8f39da8b",
+   "chain/u23_superradiance.py": "f64fc0deb1508fcff6639971186f0ee9b092b77703d41f80cde8520e973df00a",
+   "chain/u_contract.py": "e378acdb881e1d787516bfd53d2b47729b8186ca12f55dcd2f35a9a0b087b222",
+   "chain/ucommon.py": "4fdb9a857dfb861f9dcbe727d23a8022f121042ab6897628916af187e5fb79dd",
+   "chain/vendor_potential.py": "72b5e7d4db0a6866189690de4bf10929a5c5a197f1a782bc409cdc7eab252b30",
+   "components/c35b_pseudo_goldstone_dm_rp3.py": "263c05cb4194485cd3a2d928c8ae5d089c483f2533c7ec4f5781ac65fc5f532a",
+   "components/c44i_hierarchy_universality.py": "5178673470e0eb4e15bd56d3f6ee94eb701d88a172b9346ca3c4487c4e88b7dc",
+   "components/c45b_hom/frw.py": "573b2e217fc0854be99acb811e29a716be01a760b8c6ed1692efaaf0b6401952",
+   "components/c45b_hom/frw_c.py": "736a4f165cd9b58d17a2696a654a33c6e956b18fd447ae1181a7788bbbce44a4",
+   "components/c45b_hom/frw_core.c": "44043fb4da26b7652c0b2e35276acb177f9d8fdf7340cac4c03c3e415e9c5f56",
+   "components/c46_chi_reheating_relic.py": "cb4b4e199baf40b71b5b009c235cf156ccbd20db3de16cecb6bb44595ec6c25f",
+   "components/cadena_cierre/common.py": "ed7de6351e738eb9fdef918c22c4a52efe8e7d1fc41e2d44d7b16a5c93ccaddb",
+   "components/cadena_cierre/contract.py": "7b13f27467901167758a1c15b35c4a73ef1cb3da3166f86e8681c20f3562778d",
+   "components/cadena_cierre/dark.py": "f241ddef4afe6eb2d8014b5a77e1acef81cb68a5c3292ab28e74a029a62a78a0",
+   "components/cadena_cierre/scalar_end.py": "72a341341a759ca51daba31e14e90690ed17f6bfbf709e9d63fced8a9920aa40",
+   "components/cadena_cierre/stochastic.py": "d7e88f8c328f9a6065cf480ea8ff2a50dbd40fca882c1479952b50493b9be95c",
+   "components/cadena_cierre/thermal.py": "a269230a3482beada60d7e7007752cb0443e691b32ee551ff964d6d64d2b9594"
+  }
+ },
+ "species": [
+  {
+   "name": "Goldstone_3",
+   "multiplicity": 3,
+   "mass_code": 0.0,
+   "width_code": 0.0
+  },
+  {
+   "name": "normal_quintet_5",
+   "multiplicity": 5,
+   "mass_code": 0.4898979485566356,
+   "width_code": 2.9238630046262836e-06
+  },
+  {
+   "name": "normal_singlet_1",
+   "multiplicity": 1,
+   "mass_code": 0.4898979485566356,
+   "width_code": 1.1695452018505134e-05
+  },
+  {
+   "name": "trace_heavy_1",
+   "multiplicity": 1,
+   "mass_code": 1.3564659966250536,
+   "width_code": 3.45054715629831e-05
+  }
+ ],
+ "stable_massive_species_in_action": 0,
+ "goldstone_mass_in_action": 0.0,
+ "note_goldstone_mass": "m_G of the pseudo-Goldstone DM is an added explicit-breaking term (C35/C35b), not part of the common action",
+ "Q_mass_GeV": 18534271810231.188,
+ "Q_width_GeV": 110618286.57026488,
+ "min_Q_width_over_Gamma_chi": 407413.42087018193,
+ "late_fluid_T_GeV": [
+  1983434676.4654517,
+  1983435120.5899312
+ ],
+ "T_rh_S2_GeV": 1983434625.3435986,
+ "late_vs_S2_rel": 2.496912812066654e-07,
+ "DeltaNeff_late_homogeneous_max": 2.8791345122448836e-09,
+ "F_identity_rel": 0.0,
+ "ordering": {
+  "connection": "\u03c7 -> curvatura -> ordenaci\u00f3n Q",
+  "state": "PASS_CONNECTION",
+  "evidence": "Same exact endpoint; ordering switch at 2.3727 e-folds",
+  "remaining": "Spectator Q, inherited fluctuation normalization; small lattice is smoke"
+ },
+ "network": {
+  "local_certified_perimeters": 159,
+  "representative_core_resolved_network": false,
+  "actual_network_source_calibrated": false,
+  "source_contract_status": "NOT_CALIBRATED",
+  "source_blockers": [
+   "No representative physical-core-resolved 3D network with two-way refinement",
+   "Local zoom has prescribed one-way boundaries and omits z gradients",
+   "Local net current includes incoming transport and cosmological work",
+   "Pair emission depends strongly on initial preparation and finite window",
+   "Boundary frequency cross spectra are signed energy budgets, not particle occupation spectra"
+  ]
+ },
+ "downstream_controls_passed": true,
+ "status": "PASS"
+}

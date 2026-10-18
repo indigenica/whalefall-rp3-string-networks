@@ -1,0 +1,35 @@
+{
+ "spec": "ESPEC_U3.md (U3b)",
+ "available": {
+  "F1": [
+   0,
+   2
+  ],
+  "F2": [
+   0,
+   1
+  ]
+ },
+ "xi_4p5": {
+  "F1_RP3": NaN,
+  "F1_U1": 0.4369571250027492,
+  "F2_RP3": NaN,
+  "F2_U1": 0.6002124363271201
+ },
+ "eta_U1_F1": 0.37172204543215914,
+ "G1": {
+  "xi_U1": 0.4369571250027492,
+  "eta_U1": 0.37172204543215914,
+  "passed": false
+ },
+ "G2": {
+  "ic_memory": {
+   "RP3": NaN,
+   "U1": 0.3148092990986802
+  },
+  "passed": false,
+  "note": "RP3 runs of F not produced (amendment 3); U(1) memory alone exceeds 20 %"
+ },
+ "status": "GATES_FAILED",
+ "note": "R_Gamma not computed: RP3 runs of set F stopped (ESPEC_U3 amendment 3). S6 keeps the U2 value."
+}

@@ -1,0 +1,49 @@
+N=48 trial=0 pad= 3 slab= 5  frac(T<=pad)=0.076  max|D-T| (T<=pad)=8.91e-08  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=0 pad= 3 slab=16  frac(T<=pad)=0.076  max|D-T| (T<=pad)=8.91e-08  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=0 pad= 3 slab=64  frac(T<=pad)=0.076  max|D-T| (T<=pad)=8.91e-08  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=0 pad= 8 slab= 5  frac(T<=pad)=0.529  max|D-T| (T<=pad)=2.17e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=0 pad= 8 slab=16  frac(T<=pad)=0.529  max|D-T| (T<=pad)=2.17e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=0 pad= 8 slab=64  frac(T<=pad)=0.529  max|D-T| (T<=pad)=2.17e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=0 pad=14 slab= 5  frac(T<=pad)=0.961  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=0 pad=14 slab=16  frac(T<=pad)=0.961  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=0 pad=14 slab=64  frac(T<=pad)=0.961  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=1 pad= 3 slab= 5  frac(T<=pad)=0.075  max|D-T| (T<=pad)=8.91e-08  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=1 pad= 3 slab=16  frac(T<=pad)=0.075  max|D-T| (T<=pad)=8.91e-08  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=1 pad= 3 slab=64  frac(T<=pad)=0.075  max|D-T| (T<=pad)=8.91e-08  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=1 pad= 8 slab= 5  frac(T<=pad)=0.544  max|D-T| (T<=pad)=2.17e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=1 pad= 8 slab=16  frac(T<=pad)=0.544  max|D-T| (T<=pad)=2.17e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=1 pad= 8 slab=64  frac(T<=pad)=0.544  max|D-T| (T<=pad)=2.17e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=1 pad=14 slab= 5  frac(T<=pad)=0.974  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=1 pad=14 slab=16  frac(T<=pad)=0.974  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=48 trial=1 pad=14 slab=64  frac(T<=pad)=0.974  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=0 pad= 4 slab= 7  frac(T<=pad)=0.048  max|D-T| (T<=pad)=1.09e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=0 pad= 4 slab=16  frac(T<=pad)=0.048  max|D-T| (T<=pad)=1.09e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=0 pad= 4 slab=64  frac(T<=pad)=0.048  max|D-T| (T<=pad)=1.09e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=0 pad=18 slab= 7  frac(T<=pad)=0.940  max|D-T| (T<=pad)=9.40e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=0 pad=18 slab=16  frac(T<=pad)=0.940  max|D-T| (T<=pad)=9.40e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=0 pad=18 slab=64  frac(T<=pad)=0.940  max|D-T| (T<=pad)=9.40e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=0 pad=34 slab= 7  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=0 pad=34 slab=16  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=0 pad=34 slab=64  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=1 pad= 4 slab= 7  frac(T<=pad)=0.044  max|D-T| (T<=pad)=1.09e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=1 pad= 4 slab=16  frac(T<=pad)=0.044  max|D-T| (T<=pad)=1.09e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=1 pad= 4 slab=64  frac(T<=pad)=0.044  max|D-T| (T<=pad)=1.09e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=1 pad=18 slab= 7  frac(T<=pad)=0.971  max|D-T| (T<=pad)=9.40e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=1 pad=18 slab=16  frac(T<=pad)=0.971  max|D-T| (T<=pad)=9.40e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=1 pad=18 slab=64  frac(T<=pad)=0.971  max|D-T| (T<=pad)=9.40e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=1 pad=34 slab= 7  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=1 pad=34 slab=16  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=64 trial=1 pad=34 slab=64  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=0 pad=12 slab= 3  frac(T<=pad)=0.548  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=0 pad=12 slab=64  frac(T<=pad)=0.548  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=0 pad=22 slab= 3  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=0 pad=22 slab=64  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=0 pad=45 slab= 3  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=0 pad=45 slab=64  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=1 pad=12 slab= 3  frac(T<=pad)=0.539  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=1 pad=12 slab=64  frac(T<=pad)=0.539  max|D-T| (T<=pad)=4.69e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=1 pad=22 slab= 3  frac(T<=pad)=0.999  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=1 pad=22 slab=64  frac(T<=pad)=0.999  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=1 pad=45 slab= 3  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+N=40 trial=1 pad=45 slab=64  frac(T<=pad)=1.000  max|D-T| (T<=pad)=9.44e-07  D>pad where T>pad: True  masks identical: True  OK
+ALL OK

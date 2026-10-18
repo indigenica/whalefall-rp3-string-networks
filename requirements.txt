@@ -1,0 +1,4 @@
+# Python >= 3.10; a C compiler with OpenMP (gcc) for the lattice kernel; latexmk + TeX Live only for the PDF.
+numpy>=1.26
+scipy>=1.11
+matplotlib>=3.8

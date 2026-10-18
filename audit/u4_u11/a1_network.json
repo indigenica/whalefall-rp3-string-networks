@@ -1,0 +1,900 @@
+{
+ "plan": "audit/u4_u11/PLAN.md",
+ "checks": [
+  {
+   "name": "U11 R_Γ drenada",
+   "audit": 1.5617467040460815,
+   "published": 1.5617204721007263,
+   "sigma": 0.09353805778663521,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 R_Γ drenada, derivada central_smooth",
+   "audit": 1.5645492141972661,
+   "published": 1.5617204721007263,
+   "sigma": 0.09353805778663521,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 R_Γ drenada, derivada fit5",
+   "audit": 1.5643575067251179,
+   "published": 1.5617204721007263,
+   "sigma": 0.09353805778663521,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 R_ξ drenada",
+   "audit": 1.607247627429286,
+   "published": 1.607247627429286,
+   "sigma": 0.05759248630851445,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 R_Γ^corr (U(1) − ⟨X⟩)",
+   "audit": 1.5550453016583723,
+   "published": 1.543512711519956,
+   "sigma": 0.08692993231102442,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 R_Γ de U6 en la misma ventana",
+   "audit": 1.389320889650062,
+   "published": 1.3892015386821919,
+   "sigma": 0.06233706360381414,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 RP3 s61",
+   "audit": 0.7604425618414971,
+   "published": 0.760420423818633,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 RP3 s62",
+   "audit": 0.8583727969103125,
+   "published": 0.858243973996271,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 RP3 s63",
+   "audit": 0.7485536390234214,
+   "published": 0.7484964786163052,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 RP3 s64",
+   "audit": 0.8643358089147201,
+   "published": 0.8642758705992296,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 RP3 s65",
+   "audit": 0.8305720447507148,
+   "published": 0.8305064765173381,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 RP3 s66",
+   "audit": 0.8040485644375126,
+   "published": 0.8039919364757337,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 RP3 media",
+   "audit": 0.8110542359796965,
+   "published": 0.8109891933372518,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 U1 s61",
+   "audit": 0.7266571275456095,
+   "published": 0.7265696719015234,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 U1 s62",
+   "audit": 0.7617908286100967,
+   "published": 0.7616363521486892,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 U1 s63",
+   "audit": 0.7177897448250888,
+   "published": 0.7176753582041976,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 U1 s64",
+   "audit": 0.6661553115378689,
+   "published": 0.6660937426774337,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 drenada/U6 U1 media",
+   "audit": 0.718098253129666,
+   "published": 0.717993781232961,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 ρ_M/ρ_a al final, RP3 drenada",
+   "audit": 0.14216843418769087,
+   "published": 0.14240760229616165,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 ρ_M/ρ_a al final, U1 drenada",
+   "audit": 0.18618151467323946,
+   "published": 0.18651036316532316,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 ρ_M/ρ_a al final, RP3 U6",
+   "audit": 0.8983734479629645,
+   "published": 0.8973473289136162,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 ρ_M/ρ_a al final, U1 U6",
+   "audit": 0.5958232821936742,
+   "published": 0.5955476372132792,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 f_X U(1) s61",
+   "audit": -0.002040555810539342,
+   "published": -0.0058947178116514655,
+   "sigma": null,
+   "status": "DISCREPANCIA"
+  },
+  {
+   "name": "U11 f_X U(1) s62",
+   "audit": -0.009229236507652592,
+   "published": -0.01336524035642198,
+   "sigma": null,
+   "status": "DISCREPANCIA"
+  },
+  {
+   "name": "U11 f_X U(1) s63",
+   "audit": -0.000794697856155777,
+   "published": -0.0031265927001563197,
+   "sigma": null,
+   "status": "DISCREPANCIA"
+  },
+  {
+   "name": "U11 f_X U(1) s64",
+   "audit": -0.019342509259219442,
+   "published": -0.02340278259524354,
+   "sigma": null,
+   "status": "DISCREPANCIA"
+  },
+  {
+   "name": "U11 q_RP3 q0(ℓ=5), mismo convenio",
+   "audit": 0.873332712063817,
+   "published": 0.8733327120638186,
+   "sigma": 0.059359753474258294,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 q_RP3 q0(ℓ=5), base del auditor",
+   "audit": 0.8920376919400189,
+   "published": 0.8733327120638186,
+   "sigma": 0.059359753474258294,
+   "status": "PASA"
+  },
+  {
+   "name": "U11 q_RP3 q1, mismo convenio",
+   "audit": -0.3242753806497286,
+   "published": -0.32427538064973377,
+   "sigma": 0.18241308109102117,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 R_Γ",
+   "audit": 1.389320889650062,
+   "published": 1.3892015386821923,
+   "sigma": 0.06233706360381416,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 R_ξ",
+   "audit": 1.61664458724209,
+   "published": 1.6166445872420898,
+   "sigma": 0.05345679502136446,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 R_Γ integral",
+   "audit": 1.3718613522344174,
+   "published": 1.3718613522344176,
+   "sigma": 0.07691538340124829,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 q_RP3 q0(ℓ=5), mismo convenio",
+   "audit": 1.0260691211495188,
+   "published": 1.0260691211495172,
+   "sigma": 0.11765448181230705,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 q_RP3 q0(ℓ=5), base del auditor",
+   "audit": 1.1093950295119763,
+   "published": 1.0260691211495172,
+   "sigma": 0.11765448181230705,
+   "status": "MATIZADO"
+  },
+  {
+   "name": "U6 q_RP3 q1, mismo convenio",
+   "audit": -0.11675204606969597,
+   "published": -0.1167520460696938,
+   "sigma": 0.2931660264799476,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 q_U1 q0(ℓ=5), mismo convenio",
+   "audit": -0.17931167669663708,
+   "published": -0.17931167669663703,
+   "sigma": 0.26445256033892056,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 q_U1 q0(ℓ=5), base del auditor",
+   "audit": -0.13585709531538254,
+   "published": -0.17931167669663703,
+   "sigma": 0.26445256033892056,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 q_U1 q1, mismo convenio",
+   "audit": 0.7101472484040052,
+   "published": 0.7101472484040047,
+   "sigma": 0.6985016387638027,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 dξ/dℓ U(1) s61",
+   "audit": 0.10371797443506751,
+   "published": 0.10371797443506753,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 dξ/dℓ U(1) s62",
+   "audit": 0.09377657707044951,
+   "published": 0.09377657707044958,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 dξ/dℓ U(1) s63",
+   "audit": 0.10534384255147142,
+   "published": 0.10534384255147143,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U6 dξ/dℓ U(1) s64",
+   "audit": 0.11452898715899261,
+   "published": 0.11452898715899264,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U9 R_Γ densas",
+   "audit": 1.6884167528051905,
+   "published": 1.6884121252354802,
+   "sigma": 0.027535067667666786,
+   "status": "PASA"
+  },
+  {
+   "name": "U9 R_ξ densas",
+   "audit": 1.580855304384806,
+   "published": 1.5808553043848057,
+   "sigma": 0.08990225366508348,
+   "status": "PASA"
+  },
+  {
+   "name": "U9 dξ/dℓ RP3 densa s61",
+   "audit": 0.3117019878036364,
+   "published": 0.31170198780363617,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U9 dξ/dℓ RP3 densa s62",
+   "audit": 0.3077899613807095,
+   "published": 0.30778996138070935,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U9 dξ/dℓ RP3 poco densa (media)",
+   "audit": 0.3132307769661994,
+   "published": 0.31323077696619933,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U9 q_RP3 densas q0(ℓ=5), mismo convenio",
+   "audit": 0.7382861129895751,
+   "published": 0.7382861129895751,
+   "sigma": 0.06645182424395565,
+   "status": "PASA"
+  },
+  {
+   "name": "U9 q_RP3 densas q0(ℓ=5), base del auditor",
+   "audit": 0.8062844649741268,
+   "published": 0.7382861129895751,
+   "sigma": 0.06645182424395565,
+   "status": "DISCREPANCIA"
+  },
+  {
+   "name": "U9 q_RP3 densas q1, mismo convenio",
+   "audit": 0.08684751729193312,
+   "published": 0.08684751729193312,
+   "sigma": 0.10070760741678975,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a R_Γ drenadas densas",
+   "audit": 1.7553988579604722,
+   "published": 1.755380237206192,
+   "sigma": 0.09073359481194393,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a R_Γ drenadas poco densas",
+   "audit": 1.6307987470218233,
+   "published": 1.630847264180409,
+   "sigma": 0.01945788894395088,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a R_ξ drenadas densas",
+   "audit": 1.388402998375223,
+   "published": 1.3884029983752233,
+   "sigma": 0.09099311220319357,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a R_ξ drenadas poco densas",
+   "audit": 1.5868450500682378,
+   "published": 1.5868450500682378,
+   "sigma": 0.13495533884194194,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a brecha G",
+   "audit": 0.07359293548333866,
+   "published": 0.0735526322285132,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a ρ_M/ρ_a al final, RP3 densas",
+   "audit": 0.2693504392178945,
+   "published": 0.2696074990243286,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a ρ_M/ρ_a al final, RP3 poco densas",
+   "audit": 0.14372516486597242,
+   "published": 0.14389986049486697,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a ρ_M/ρ_a al final, U1 densas",
+   "audit": 0.2923771213571939,
+   "published": 0.2927480663208516,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a ρ_M/ρ_a al final, U1 poco densas",
+   "audit": 0.19406994192496457,
+   "published": 0.19458965181974502,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a q_RP3 densas q0(ℓ=5), mismo convenio",
+   "audit": 0.699982491544157,
+   "published": 0.6999824915441593,
+   "sigma": 0.012487504785993319,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a q_RP3 densas q0(ℓ=5), base del auditor",
+   "audit": 0.648491016811447,
+   "published": 0.6999824915441593,
+   "sigma": 0.012487504785993319,
+   "status": "DISCREPANCIA"
+  },
+  {
+   "name": "U10a q_RP3 poco densas q0(ℓ=5), mismo convenio",
+   "audit": 0.5927444340835274,
+   "published": 0.5927444340835273,
+   "sigma": 0.0049459672125310924,
+   "status": "PASA"
+  },
+  {
+   "name": "U10a q_RP3 poco densas q0(ℓ=5), base del auditor",
+   "audit": 0.47852876376692716,
+   "published": 0.5927444340835273,
+   "sigma": 0.0049459672125310924,
+   "status": "DISCREPANCIA"
+  },
+  {
+   "name": "U10b dξ/dℓ RP3 lanzadas tarde",
+   "audit": -0.19999926860705672,
+   "published": -0.19999926860705683,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10b dξ/dℓ RP3 U11",
+   "audit": 0.2871331715460844,
+   "published": 0.2881366469663683,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10b ξ final RP3 lanzadas tarde",
+   "audit": 1.7301437179442873,
+   "published": 1.7301437179442873,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10b dξ/dℓ U1 lanzadas tarde",
+   "audit": -0.2557306394882998,
+   "published": -0.25573063948829977,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10b dξ/dℓ U1 U11",
+   "audit": 0.13454034085479166,
+   "published": 0.1347964761773087,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10b ξ final U1 lanzadas tarde",
+   "audit": 1.1033504469166582,
+   "published": 1.1033504469166582,
+   "sigma": null,
+   "status": "PASA"
+  },
+  {
+   "name": "U10b R_Γ lanzadas tarde",
+   "audit": 1.3018635121591235,
+   "published": 1.3017412150355234,
+   "sigma": 0.1393198745753435,
+   "status": "PASA"
+  },
+  {
+   "name": "U10b q_RP3 lanzadas tarde q0(ℓ=5), mismo convenio",
+   "audit": 0.1855682728369112,
+   "published": 0.18556827283691235,
+   "sigma": 0.041544176967048575,
+   "status": "PASA"
+  },
+  {
+   "name": "U10b q_RP3 lanzadas tarde q0(ℓ=5), base del auditor",
+   "audit": 0.17238040111540312,
+   "published": 0.18556827283691235,
+   "sigma": 0.041544176967048575,
+   "status": "PASA"
+  }
+ ],
+ "U11_R": [
+  1.5617467040460815,
+  0.09557501328403328
+ ],
+ "U11_Rcorr": [
+  1.5550453016583723,
+  0.08896854193604128
+ ],
+ "q_variants": {
+  "U11 q_RP3": {
+   "variants": {
+    "a,H del instante final del par (como el publicado)": {
+     "q0_at_ell5": 0.873332712063817,
+     "q1_per_ell": -0.3242753806497286,
+     "q0_std": 0.05961917840844712,
+     "q1_std": 0.18364855372984631,
+     "q_end": 0.6583509500120063,
+     "n_points": 42
+    },
+    "a,H medios geométricos (base del auditor)": {
+     "q0_at_ell5": 0.8920376919400189,
+     "q1_per_ell": -0.41262694454018994,
+     "q0_std": 0.05790029651694362,
+     "q1_std": 0.1474524980176393,
+     "q_end": 0.6184823346706262,
+     "n_points": 42
+    },
+    "a,H del instante inicial del par": {
+     "q0_at_ell5": 0.9048804304439728,
+     "q1_per_ell": -0.4903665480391842,
+     "q0_std": 0.05937688407055173,
+     "q1_std": 0.1483196704775249,
+     "q_end": 0.5797867883133088,
+     "n_points": 42
+    },
+    "k en el borde superior del bin": {
+     "q0_at_ell5": 0.909352319226776,
+     "q1_per_ell": -0.3233690348364207,
+     "q0_std": 0.06613093979452063,
+     "q1_std": 0.21117850247443684,
+     "q_end": 0.694971428630525,
+     "n_points": 42
+    },
+    "ajuste ponderado por F": {
+     "q0_at_ell5": 0.9384628343316228,
+     "q1_per_ell": -0.3308144128702564,
+     "q0_std": 0.03943761674141896,
+     "q1_std": 0.11447111216482472,
+     "q_end": 0.7191459523392665,
+     "n_points": 42
+    }
+   },
+   "spread": 0.06513012226780579,
+   "q0_plus_2sigma": {
+    "a,H del instante final del par (como el publicado)": 0.9925710688807112,
+    "a,H medios geométricos (base del auditor)": 1.0078382849739063,
+    "a,H del instante inicial del par": 1.0236341985850763,
+    "k en el borde superior del bin": 1.0416141988158172,
+    "ajuste ponderado por F": 1.0173380678144608
+   }
+  },
+  "U6 q_RP3": {
+   "variants": {
+    "a,H del instante final del par (como el publicado)": {
+     "q0_at_ell5": 1.0260691211495188,
+     "q1_per_ell": -0.11675204606969597,
+     "q0_std": 0.11558684351439899,
+     "q1_std": 0.286990444161014,
+     "q_end": 0.948667128630299,
+     "n_points": 32
+    },
+    "a,H medios geométricos (base del auditor)": {
+     "q0_at_ell5": 1.1093950295119763,
+     "q1_per_ell": -0.24339601216309178,
+     "q0_std": 0.12717077922279085,
+     "q1_std": 0.27233269155123196,
+     "q_end": 0.9480330924251584,
+     "n_points": 32
+    },
+    "a,H del instante inicial del par": {
+     "q0_at_ell5": 0.9041877227279573,
+     "q1_per_ell": 0.11657186737107669,
+     "q0_std": 0.04594389899663549,
+     "q1_std": 0.08335624349479305,
+     "q_end": 0.9814702638906302,
+     "n_points": 31
+    },
+    "k en el borde superior del bin": {
+     "q0_at_ell5": 0.9436412642230358,
+     "q1_per_ell": 0.16590580894086784,
+     "q0_std": 0.03789687976513713,
+     "q1_std": 0.08035463937965348,
+     "q_end": 1.0536302589758162,
+     "n_points": 31
+    },
+    "ajuste ponderado por F": {
+     "q0_at_ell5": 0.9030105817440023,
+     "q1_per_ell": 0.18298403247836628,
+     "q0_std": 0.0411430284473838,
+     "q1_std": 0.042351445106801694,
+     "q_end": 1.0243217637730715,
+     "n_points": 32
+    }
+   },
+   "spread": 0.20638444776797404,
+   "q0_plus_2sigma": {
+    "a,H del instante final del par (como el publicado)": 1.2572428081783167,
+    "a,H medios geométricos (base del auditor)": 1.363736587957558,
+    "a,H del instante inicial del par": 0.9960755207212283,
+    "k en el borde superior del bin": 1.01943502375331,
+    "ajuste ponderado por F": 0.9852966386387699
+   }
+  },
+  "U6 q_U1": {
+   "variants": {
+    "a,H del instante final del par (como el publicado)": {
+     "q0_at_ell5": -0.17931167669663708,
+     "q1_per_ell": 0.7101472484040052,
+     "q0_std": 0.25864482289732676,
+     "q1_std": 0.6803039197487074,
+     "q_end": 0.29148788407250326,
+     "n_points": 13
+    },
+    "a,H medios geométricos (base del auditor)": {
+     "q0_at_ell5": -0.13585709531538254,
+     "q1_per_ell": 0.8678509937334906,
+     "q0_std": 0.32856351868792977,
+     "q1_std": 0.8338573133902286,
+     "q_end": 0.43949381617663036,
+     "n_points": 13
+    },
+    "a,H del instante inicial del par": {
+     "q0_at_ell5": 6.299586605437098e-05,
+     "q1_per_ell": 0.7082026595711199,
+     "q0_std": 0.3046329423992928,
+     "q1_std": 0.8604301386962236,
+     "q_end": 0.46957337108887803,
+     "n_points": 13
+    },
+    "k en el borde superior del bin": {
+     "q0_at_ell5": -0.02147750624517399,
+     "q1_per_ell": 0.6087792459637119,
+     "q0_std": 0.32015192334433773,
+     "q1_std": 0.8597779092270652,
+     "q_end": 0.3821190749557277,
+     "n_points": 13
+    },
+    "ajuste ponderado por F": {
+     "q0_at_ell5": -0.2813125487709318,
+     "q1_per_ell": 0.7481322799595226,
+     "q0_std": 0.14534186560119286,
+     "q1_std": 0.2940267977087493,
+     "q_end": 0.21466958675623332,
+     "n_points": 13
+    }
+   },
+   "spread": 0.28137554463698616,
+   "q0_plus_2sigma": {
+    "a,H del instante final del par (como el publicado)": 0.3379779690980165,
+    "a,H medios geométricos (base del auditor)": 0.5212699420604769,
+    "a,H del instante inicial del par": 0.60932888066464,
+    "k en el borde superior del bin": 0.6188263404435015,
+    "ajuste ponderado por F": 0.009371182431453906
+   }
+  },
+  "U9 q_RP3 densas": {
+   "variants": {
+    "a,H del instante final del par (como el publicado)": {
+     "q0_at_ell5": 0.7382861129895751,
+     "q1_per_ell": 0.08684751729193312,
+     "q0_std": 0.06670984296530451,
+     "q1_std": 0.10109863427559201,
+     "q_end": 0.79586258475205,
+     "n_points": 14
+    },
+    "a,H medios geométricos (base del auditor)": {
+     "q0_at_ell5": 0.8062844649741268,
+     "q1_per_ell": 0.04068746712636262,
+     "q0_std": 0.14567163515998338,
+     "q1_std": 0.03440762011309151,
+     "q_end": 0.8332586477157357,
+     "n_points": 13
+    },
+    "a,H del instante inicial del par": {
+     "q0_at_ell5": 1.1656982922848185,
+     "q1_per_ell": -0.9554052108983299,
+     "q0_std": 0.2328046850180519,
+     "q1_std": 0.2790793985104781,
+     "q_end": 0.5323023949432769,
+     "n_points": 11
+    },
+    "k en el borde superior del bin": {
+     "q0_at_ell5": 1.1962200571672779,
+     "q1_per_ell": -0.8166946888947137,
+     "q0_std": 0.17731050184338318,
+     "q1_std": 0.17464973403657202,
+     "q_end": 0.6547837540931613,
+     "n_points": 12
+    },
+    "ajuste ponderado por F": {
+     "q0_at_ell5": 0.6373412033593789,
+     "q1_per_ell": 0.6020513472624235,
+     "q0_std": 0.11937019559487909,
+     "q1_std": 0.046346357499274134,
+     "q_end": 1.0364774536069685,
+     "n_points": 13
+    }
+   },
+   "spread": 0.5588788538078989,
+   "q0_plus_2sigma": {
+    "a,H del instante final del par (como el publicado)": 0.8717057989201842,
+    "a,H medios geométricos (base del auditor)": 1.0976277352940935,
+    "a,H del instante inicial del par": 1.6313076623209222,
+    "k en el borde superior del bin": 1.5508410608540442,
+    "ajuste ponderado por F": 0.8760815945491371
+   }
+  },
+  "U10a q_RP3 densas": {
+   "variants": {
+    "a,H del instante final del par (como el publicado)": {
+     "q0_at_ell5": 0.699982491544157,
+     "q1_per_ell": 0.03828589832953242,
+     "q0_std": 0.01221517924833716,
+     "q1_std": 0.13614390281570013,
+     "q_end": 0.7208550997550559,
+     "n_points": 12
+    },
+    "a,H medios geométricos (base del auditor)": {
+     "q0_at_ell5": 0.648491016811447,
+     "q1_per_ell": 0.1515755161732479,
+     "q0_std": 0.05446947149907346,
+     "q1_std": 0.16566561358135765,
+     "q_end": 0.7311265693644489,
+     "n_points": 12
+    },
+    "a,H del instante inicial del par": {
+     "q0_at_ell5": 0.6212449636293982,
+     "q1_per_ell": 0.1666809217992726,
+     "q0_std": 0.045423329532450124,
+     "q1_std": 0.18560046922296386,
+     "q_end": 0.7121156426194234,
+     "n_points": 12
+    },
+    "k en el borde superior del bin": {
+     "q0_at_ell5": 0.786486543596156,
+     "q1_per_ell": -0.16346234463779608,
+     "q0_std": 0.08562917735978534,
+     "q1_std": 0.03438646437815881,
+     "q_end": 0.6973705602778848,
+     "n_points": 12
+    },
+    "ajuste ponderado por F": {
+     "q0_at_ell5": 0.7163134106517042,
+     "q1_per_ell": 0.23047072778110786,
+     "q0_std": 0.06458108313707114,
+     "q1_std": 0.04817656042452375,
+     "q_end": 0.8419608530507534,
+     "n_points": 12
+    }
+   },
+   "spread": 0.1652415799667578,
+   "q0_plus_2sigma": {
+    "a,H del instante final del par (como el publicado)": 0.7244128500408313,
+    "a,H medios geométricos (base del auditor)": 0.7574299598095939,
+    "a,H del instante inicial del par": 0.7120916226942984,
+    "k en el borde superior del bin": 0.9577448983157266,
+    "ajuste ponderado por F": 0.8454755769258464
+   }
+  },
+  "U10a q_RP3 poco densas": {
+   "variants": {
+    "a,H del instante final del par (como el publicado)": {
+     "q0_at_ell5": 0.5927444340835274,
+     "q1_per_ell": 0.038464256444894304,
+     "q0_std": 0.004877986374239578,
+     "q1_std": 0.20414176646536594,
+     "q_end": 0.6137142791159614,
+     "n_points": 12
+    },
+    "a,H medios geométricos (base del auditor)": {
+     "q0_at_ell5": 0.47852876376692716,
+     "q1_per_ell": -0.42592366697191575,
+     "q0_std": 0.007708151439059508,
+     "q1_std": 0.2789217575226808,
+     "q_end": 0.24632478746381398,
+     "n_points": 12
+    },
+    "a,H del instante inicial del par": {
+     "q0_at_ell5": 0.5578420897399956,
+     "q1_per_ell": -0.6743228521244675,
+     "q0_std": 0.05390223664382363,
+     "q1_std": 0.46030123675780266,
+     "q_end": 0.1902164804646086,
+     "n_points": 12
+    },
+    "k en el borde superior del bin": {
+     "q0_at_ell5": 0.5988686945776837,
+     "q1_per_ell": -0.034875248610141615,
+     "q0_std": 0.013132818946586657,
+     "q1_std": 0.3415461159908913,
+     "q_end": 0.5798554956648172,
+     "n_points": 12
+    },
+    "ajuste ponderado por F": {
+     "q0_at_ell5": 0.7927931018008819,
+     "q1_per_ell": 0.6770377001125515,
+     "q0_std": 0.02337188559776275,
+     "q1_std": 0.12105614806870776,
+     "q_end": 1.161898784964563,
+     "n_points": 12
+    }
+   },
+   "spread": 0.31426433803395476,
+   "q0_plus_2sigma": {
+    "a,H del instante final del par (como el publicado)": 0.6025004068320066,
+    "a,H medios geométricos (base del auditor)": 0.49394506664504617,
+    "a,H del instante inicial del par": 0.6656465630276429,
+    "k en el borde superior del bin": 0.6251343324708569,
+    "ajuste ponderado por F": 0.8395368729964074
+   }
+  },
+  "U10b q_RP3 lanzadas tarde": {
+   "variants": {
+    "a,H del instante final del par (como el publicado)": {
+     "q0_at_ell5": 0.1855682728369112,
+     "q1_per_ell": 0.7734505375125809,
+     "q0_std": 0.041337539635731134,
+     "q1_std": 0.28654633544231795,
+     "q_end": 0.6983354125476574,
+     "n_points": 42
+    },
+    "a,H medios geométricos (base del auditor)": {
+     "q0_at_ell5": 0.17238040111540312,
+     "q1_per_ell": 0.8257389177189352,
+     "q0_std": 0.028225998369046428,
+     "q1_std": 0.3289571470491151,
+     "q_end": 0.7198126704732848,
+     "n_points": 42
+    },
+    "a,H del instante inicial del par": {
+     "q0_at_ell5": 0.16573624903773662,
+     "q1_per_ell": 0.8510959712054987,
+     "q0_std": 0.029452470980279342,
+     "q1_std": 0.2862755647295306,
+     "q_end": 0.7299792427499034,
+     "n_points": 42
+    },
+    "k en el borde superior del bin": {
+     "q0_at_ell5": 0.17685545068391148,
+     "q1_per_ell": 0.9395330197493214,
+     "q0_std": 0.08610016571296956,
+     "q1_std": 0.15741491940612265,
+     "q_end": 0.7997287125604969,
+     "n_points": 42
+    },
+    "ajuste ponderado por F": {
+     "q0_at_ell5": 0.15231357140050478,
+     "q1_per_ell": 0.6133391249498259,
+     "q0_std": 0.04182761015230336,
+     "q1_std": 0.199201406027813,
+     "q_end": 0.5589331721634023,
+     "n_points": 42
+    }
+   },
+   "spread": 0.033254701436406436,
+   "q0_plus_2sigma": {
+    "a,H del instante final del par (como el publicado)": 0.26824335210837347,
+    "a,H medios geométricos (base del auditor)": 0.22883239785349596,
+    "a,H del instante inicial del par": 0.2246411909982953,
+    "k en el borde superior del bin": 0.3490557821098506,
+    "ajuste ponderado por F": 0.23596879170511148
+   }
+  }
+ },
+ "U11_verdicts": {
+  "R": "LIMPIA_ZONA_PERMITIDA",
+  "R_corr": "LIMPIA_ZONA_PERMITIDA",
+  "q": {
+   "a,H del instante final del par (como el publicado)": "Q_MENOR_QUE_1",
+   "a,H medios geométricos (base del auditor)": "Q_COMPATIBLE_CON_1",
+   "a,H del instante inicial del par": "Q_COMPATIBLE_CON_1",
+   "k en el borde superior del bin": "Q_COMPATIBLE_CON_1",
+   "ajuste ponderado por F": "Q_COMPATIBLE_CON_1"
+  }
+ },
+ "summary": {
+  "PASA": 64,
+  "MATIZADO": 1,
+  "DISCREPANCIA": 7,
+  "SIN_REFERENCIA": 0
+ }
+}
