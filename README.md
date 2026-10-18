@@ -1,9 +1,13 @@
 # RP³ ≃ SO(3) global-string networks relative to U(1)
 
+[![Preprint DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23451009.svg)](https://doi.org/10.5281/zenodo.23451009)
+[![reproducibility](https://github.com/indigenica/whalefall-rp3-string-networks/actions/workflows/ci.yml/badge.svg)](https://github.com/indigenica/whalefall-rp3-string-networks/actions/workflows/ci.yml)
+
 Code, network summaries, preregistered specifications, independent audit and paper for
 
 > J. Bautista, *Density and Goldstone emission of an RP³ ≃ SO(3) global-string network relative to U(1), and a
-> massive-bath systematic of the emission estimator* (draft for Physical Review D, `paper/prd_network/`).
+> massive-bath systematic of the emission estimator*, preprint (2026), Zenodo, [doi:10.5281/zenodo.23451009](https://doi.org/10.5281/zenodo.23451009).
+> Source in `paper/prd_network/`.
 
 We evolve networks of global ℤ₂ strings with vacuum manifold RP³ (a real symmetric 4×4 order parameter) and U(1)
 axion-string networks in the same code, with matched Goldstone decay constant and core mass, up to 576³ (U(1) control
@@ -73,6 +77,6 @@ in whalefall and exported again; files are not edited here.
 
 ## Citation and licence
 
-Please cite the paper (`CITATION.cff`; Zenodo DOI to be added on publication of the preprint).
+Please cite the paper: J. Bautista (2026), Zenodo, [doi:10.5281/zenodo.23451009](https://doi.org/10.5281/zenodo.23451009) (also in `CITATION.cff`, and under "Cite this repository" on GitHub).
 
 Code: GPL-3.0-or-later. Paper, figures, data and documentation: CC BY-NC 4.0. Research and teaching use is free; commercial use of the text, figures or data, or use of the code in closed-source software, needs the author's permission. Details in `LICENSE.md`.

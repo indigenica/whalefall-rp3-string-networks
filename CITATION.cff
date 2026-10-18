@@ -8,6 +8,7 @@ authors:
     email: jozebautista@gmail.com
     orcid: "https://orcid.org/0009-0001-6655-4028"
 repository-code: "https://github.com/indigenica/whalefall-rp3-string-networks"
+url: "https://doi.org/10.5281/zenodo.23451009"
 license:
   - GPL-3.0-or-later
   - CC-BY-NC-4.0
@@ -28,4 +29,7 @@ preferred-citation:
       orcid: "https://orcid.org/0009-0001-6655-4028"
   year: 2026
   status: preprint
-  notes: "Zenodo DOI to be added on publication of the preprint."
+  doi: "10.5281/zenodo.23451009"
+  url: "https://doi.org/10.5281/zenodo.23451009"
+  publisher:
+    name: Zenodo
