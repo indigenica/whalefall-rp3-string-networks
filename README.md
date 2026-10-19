@@ -18,7 +18,8 @@ also at 768³), and measure:
 | String-density ratio R_ξ = ξ_RP³/ξ_U(1) | ≈ 1.6 for every protocol; observed 1.57 (from above) and 1.68 (from below) at ℓ = 5.61 | U6, U9, U10b, U11 |
 | Massive-bath systematic of the kinetic emission estimator | 19 % (RP³) and 28 % (U(1)) of the sparse-start emission; > 50 % for dense starts | U9, U10a, U11, T7 |
 | Emission ratio with the initial bath drained, R_Γ = Γ_RP³/Γ_U(1) | 1.56 ± 0.09 (stat) ± 0.08 (snapshot sampling) | U11, U18 |
-| Spectral slope q_RP³(ℓ = 5) | 0.87 ± 0.06, convention-dependent by up to 0.07; quoted as compatible with 1 | U11, audit |
+| Spectral slope q_RP³(ℓ = 5) | 0.87 ± 0.06; the momentum-window convention moves it by up to 0.04 and a spectrum-weighted fit gives 0.94 ± 0.04, so it is quoted as compatible with 1 | U11, audit |
+| Drain and time step (384³, three seeds) | the drain end and rate change R_Γ by at most 1.9 ± 1.4 % (doubling the rate lowers R_ξ by 5.6 ± 1.5 %); dτ/2 changes R_Γ by −0.10 ± 0.14 % | U24, U25 |
 | Resolution / volume | R_ξ changes by −0.26 % between m_r a dx = 1 and 0.6; a box with 4.6× more Hubble volumes changes R_ξ by −0.6 ± 5.5 % and R_Γ by +0.7 ± 4.9 % | U16 |
 
 ## Reproduce
