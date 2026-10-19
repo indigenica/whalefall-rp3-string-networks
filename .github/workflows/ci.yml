@@ -10,8 +10,8 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install -r requirements.txt
-      - name: kernel tests (incl. bit-level reproduction of a stored run)
-        run: make test
+      - name: kernel tests (incl. the reproduction of a stored run; a skipped test fails here)
+        run: REQUIRE_ALL=1 make test
       - name: independent audit over the stored networks
         run: make audit
       - name: every number quoted in the paper matches the stored results

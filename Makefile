@@ -8,7 +8,7 @@ export OMP_NUM_THREADS ?= 2
 
 all: test audit numbers figures ## everything that runs in a few minutes on a laptop
 
-test:                           ## kernel tests: linear spectrum, Z2 detection, bit-level reproduction of a stored U2 run (~1 min; gcc + OpenMP)
+test:                           ## kernel tests: linear spectrum, Z2 detection, reproduction of a stored U2 run (string counts exact, rho_a to 1e-4), drain/time-grid identity (~1 min; gcc + OpenMP)
 	$(PY) -B network/test_network.py
 
 validate:                       ## kernel validations V1-V4 of the U2 specification (~1-2 min); rewrites network/results/u2/validation.json

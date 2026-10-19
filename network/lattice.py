@@ -186,21 +186,25 @@ def exchange_sample(model, N, f, p, tau, s, keep):
 
 
 def run(model, N, tau_end, seed, sfac=1.0, xi_init=0.5, dtau=0.25, nsnap=24, spectra_every=3, out_dir=None, log=print,
-        damp_ell=None, exch=False, exch_samples=8, exch_stride=4, ell_i=1.0):
+        damp_ell=None, exch=False, exch_samples=8, exch_stride=4, ell_i=1.0, damp_rate=None, tau_grid=None, return_fields=False):
     """amendment 4: start at ell_i = 1 (tau0 = sqrt(e tau_end / sfac)) with lc chosen so that the initial xi ~ xi_init.
     U10a (ESPEC_U10a): damp_ell -> drain of the massive velocity at physical rate m until ell = damp_ell;
     exch -> after every snapshot, exch_samples evaluations of the exchange X every exch_stride steps, on the cells farther
     than 4/(m a) + 0.5 * exch_samples * exch_stride * dtau cells from the snapshot's strings (strings move < 0.5 cell/tau),
     plus the massive-velocity spectrum at every spectral snapshot.  With damp_ell=None and exch=False this is the old driver;
-    with exch only, the evolution is bit-identical (the extra calls only read the fields)."""
+    with exch only, the evolution is bit-identical (the extra calls only read the fields).
+    U24: damp_rate -> drain rate (None: the physical m, as before).  U25: tau_grid -> grid on which tau0 and the snapshot
+    times are rounded (None: dtau, as before).  With both None the evolution is bit-identical to the old driver."""
     m = math.sqrt(M2[model]); s = sfac / (m * tau_end)
-    tau0 = round(math.sqrt(math.exp(ell_i) * tau_end / sfac) / dtau) * dtau      # U10b: ell_i > 1 starts later (default 1: unchanged)
+    g = tau_grid if tau_grid else dtau
+    tau0 = round(math.sqrt(math.exp(ell_i) * tau_end / sfac) / g) * g             # U10b: ell_i > 1 starts later (default 1: unchanged)
     lc = (tau0 / 18.65) * math.sqrt(KXI[model] / xi_init)
     f, p = initial(model, N, lc, seed); scratch = np.empty_like(f)
     lib()
     tau_d = math.sqrt(math.exp(damp_ell) / (m * s)) if damp_ell else 0.0
-    lib().set_damp(tau_d, m if damp_ell else 0.0)
-    taus = np.unique(np.round(np.geomspace(tau0 * 1.08, tau_end, nsnap) / dtau) * dtau)
+    rate = (m if damp_rate is None else damp_rate) if damp_ell else 0.0
+    lib().set_damp(tau_d, rate)
+    taus = np.unique(np.round(np.geomspace(tau0 * 1.08, tau_end, nsnap) / g) * g)
     rows, tau, t0, keepX = [], tau0, time.time(), None
     for j, ts in enumerate(taus):
         nst = int(round((ts - tau) / dtau))
@@ -224,10 +228,11 @@ def run(model, N, tau_end, seed, sfac=1.0, xi_init=0.5, dtau=0.25, nsnap=24, spe
     lib().set_damp(0.0, 0.0)
     res = dict(model="RP3" if model else "U1", N=N, tau_end=tau_end, seed=seed, sfac=sfac, s=s, tau0=tau0, dtau=dtau, lc=lc, xi_init=xi_init,
                f2=F2, m2=M2[model], threads=lib().nthreads(), runtime_s=time.time() - t0, rows=rows,
-               damp=dict(ell=damp_ell, tau=tau_d, rate=(m if damp_ell else 0.0)), exch=exch, ell_i=ell_i)
+               damp=dict(ell=damp_ell, tau=tau_d, rate=rate), exch=exch, ell_i=ell_i, tau_grid=g)
     if out_dir:
         Path(out_dir).mkdir(parents=True, exist_ok=True)
         (Path(out_dir) / f"{res['model']}_N{N}_s{seed}_f{sfac:g}.json").write_text(json.dumps(res, default=float))
+    if return_fields: res["_fields"] = (f.copy(), p.copy())          # tests only (U24/U25 identity checks)
     return res
 
 

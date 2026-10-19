@@ -1,0 +1,80 @@
+START 2026-10-18 12:28:34 threads=4
+DONE U24 RP3_N384_s61_D0.json 3358s xi_end=0.854
+DONE U24 U1_N384_s61_D0.json 609s xi_end=0.465
+DONE U24 RP3_N384_s61_Dearly.json 3219s xi_end=0.845
+DONE U24 U1_N384_s61_Dearly.json 662s xi_end=0.453
+DONE U24 RP3_N384_s61_Dlate.json 3985s xi_end=0.867
+DONE U24 U1_N384_s61_Dlate.json 666s xi_end=0.480
+DONE U24 RP3_N384_s61_Dweak.json 3625s xi_end=0.878
+DONE U24 U1_N384_s61_Dweak.json 661s xi_end=0.459
+DONE U24 RP3_N384_s61_Dstrong.json 3494s xi_end=0.860
+DONE U24 U1_N384_s61_Dstrong.json 657s xi_end=0.544
+DONE U25 RP3_N384_s61_dt0125.json 5992s xi_end=0.853
+DONE U25 U1_N384_s61_dt0125.json 880s xi_end=0.465
+DONE U24 RP3_N384_s62_D0.json 3433s xi_end=0.839
+DONE U24 U1_N384_s62_D0.json 589s xi_end=0.663
+DONE U24 RP3_N384_s62_Dearly.json 3153s xi_end=0.817
+DONE U24 U1_N384_s62_Dearly.json 577s xi_end=0.654
+DONE U24 RP3_N384_s62_Dlate.json 3537s xi_end=0.844
+DONE U24 U1_N384_s62_Dlate.json 585s xi_end=0.678
+DONE U24 RP3_N384_s62_Dweak.json 3429s xi_end=0.782
+DONE U24 U1_N384_s62_Dweak.json 615s xi_end=0.656
+START 2026-10-19 01:23:26 threads=4
+skip RP3_N384_s61_D0.json
+skip U1_N384_s61_D0.json
+skip RP3_N384_s61_Dearly.json
+skip U1_N384_s61_Dearly.json
+skip RP3_N384_s61_Dlate.json
+skip U1_N384_s61_Dlate.json
+skip RP3_N384_s61_Dweak.json
+skip U1_N384_s61_Dweak.json
+skip RP3_N384_s61_Dstrong.json
+skip U1_N384_s61_Dstrong.json
+skip RP3_N384_s61_dt0125.json
+skip U1_N384_s61_dt0125.json
+skip RP3_N384_s62_D0.json
+skip U1_N384_s62_D0.json
+skip RP3_N384_s62_Dearly.json
+skip U1_N384_s62_Dearly.json
+skip RP3_N384_s62_Dlate.json
+skip U1_N384_s62_Dlate.json
+skip RP3_N384_s62_Dweak.json
+skip U1_N384_s62_Dweak.json
+START 2026-10-19 01:47:44 threads=4
+skip RP3_N384_s61_D0.json
+skip U1_N384_s61_D0.json
+skip RP3_N384_s61_Dearly.json
+skip U1_N384_s61_Dearly.json
+skip RP3_N384_s61_Dlate.json
+skip U1_N384_s61_Dlate.json
+skip RP3_N384_s61_Dweak.json
+skip U1_N384_s61_Dweak.json
+skip RP3_N384_s61_Dstrong.json
+skip U1_N384_s61_Dstrong.json
+skip RP3_N384_s61_dt0125.json
+skip U1_N384_s61_dt0125.json
+skip RP3_N384_s62_D0.json
+skip U1_N384_s62_D0.json
+skip RP3_N384_s62_Dearly.json
+skip U1_N384_s62_Dearly.json
+skip RP3_N384_s62_Dlate.json
+skip U1_N384_s62_Dlate.json
+skip RP3_N384_s62_Dweak.json
+skip U1_N384_s62_Dweak.json
+DONE U24 RP3_N384_s62_Dstrong.json 3208s xi_end=0.773
+DONE U24 U1_N384_s62_Dstrong.json 526s xi_end=0.685
+DONE U25 RP3_N384_s62_dt0125.json 5323s xi_end=0.838
+DONE U25 U1_N384_s62_dt0125.json 768s xi_end=0.665
+DONE U24 RP3_N384_s63_D0.json 3323s xi_end=1.053
+DONE U24 U1_N384_s63_D0.json 518s xi_end=0.549
+DONE U24 RP3_N384_s63_Dearly.json 3261s xi_end=1.035
+DONE U24 U1_N384_s63_Dearly.json 602s xi_end=0.537
+DONE U24 RP3_N384_s63_Dlate.json 3725s xi_end=1.073
+DONE U24 U1_N384_s63_Dlate.json 595s xi_end=0.558
+DONE U24 RP3_N384_s63_Dweak.json 3490s xi_end=1.087
+DONE U24 U1_N384_s63_Dweak.json 567s xi_end=0.517
+DONE U24 RP3_N384_s63_Dstrong.json 3418s xi_end=1.110
+DONE U24 U1_N384_s63_Dstrong.json 584s xi_end=0.600
+DONE U25 RP3_N384_s63_dt0125.json 5681s xi_end=1.052
+DONE U25 U1_N384_s63_dt0125.json 823s xi_end=0.549
+END 2026-10-19 12:09:10

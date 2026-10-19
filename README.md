@@ -15,9 +15,9 @@ also at 768³), and measure:
 
 | Quantity | Value | Where |
 |---|---|---|
-| String-density ratio R_ξ = ξ_RP³/ξ_U(1) | ≈ 1.6 for every protocol; bracketed to [1.57, 1.68] from both sides of the attractor at ℓ = 5.61 | U6, U9, U10b, U11 |
+| String-density ratio R_ξ = ξ_RP³/ξ_U(1) | ≈ 1.6 for every protocol; observed 1.57 (from above) and 1.68 (from below) at ℓ = 5.61 | U6, U9, U10b, U11 |
 | Massive-bath systematic of the kinetic emission estimator | 19 % (RP³) and 28 % (U(1)) of the sparse-start emission; > 50 % for dense starts | U9, U10a, U11, T7 |
-| Bath-free emission ratio R_Γ = Γ_RP³/Γ_U(1) | 1.56 ± 0.09 (stat) ± 0.08 (snapshot sampling) | U11, U18 |
+| Emission ratio with the initial bath drained, R_Γ = Γ_RP³/Γ_U(1) | 1.56 ± 0.09 (stat) ± 0.08 (snapshot sampling) | U11, U18 |
 | Spectral slope q_RP³(ℓ = 5) | 0.87 ± 0.06, convention-dependent by up to 0.07; quoted as compatible with 1 | U11, audit |
 | Resolution / volume | R_ξ changes by −0.26 % between m_r a dx = 1 and 0.6; a box with 4.6× more Hubble volumes changes R_ξ by −0.6 ± 5.5 % and R_Γ by +0.7 ± 4.9 % | U16 |
 
@@ -26,8 +26,13 @@ also at 768³), and measure:
 Requirements: Python ≥ 3.10 with `numpy`, `scipy`, `matplotlib` (`pip install -r requirements.txt`), and `gcc` with
 OpenMP for the lattice kernel (compiled on first use into `network/_build/`). TeX Live with `latexmk` and `revtex4-2` (Debian/Ubuntu: `texlive-publishers`) only for the PDF.
 
+**Tested environment.** CI runs on Ubuntu (GitHub `ubuntu-latest`) with Python 3.11 and the newest `numpy`, `scipy` and
+`matplotlib` allowed by `requirements.txt` at the time of the run, and the system `gcc` with OpenMP. The analysis numbers
+do not depend on those versions (the audit step compares them to 1e-8). Without `gcc` the kernel tests are reported as
+`SKIP`, never as passed, and `make test` does not print `ALL PASSED`; CI sets `REQUIRE_ALL=1`, so there a skipped test fails.
+
 ```bash
-make test      # kernel tests, incl. a bit-level reproduction of a stored 128^3 U2 run (~1 min)
+make test      # kernel tests, incl. the reproduction of a stored 128^3 U2 run: identical string counts, rho_a to 1e-4 (~1 min)
 make audit     # independent re-implementation of every estimator over the stored networks (audit/u4_u11/)
 make numbers   # every number quoted in main.tex, recomputed from the stored results
 make figures   # paper figures from the stored network summaries

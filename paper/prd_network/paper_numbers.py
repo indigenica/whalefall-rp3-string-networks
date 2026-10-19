@@ -76,25 +76,45 @@ bath_RP3 = 1 - U11["drained_over_undrained_by_seed"]["RP3"]["mean"]
 bath_U1 = 1 - U11["drained_over_undrained_by_seed"]["U1"]["mean"]
 per_len = max(abs(1 - U10B[k]["R_Gamma_over_R_xi"]) for k in ("emission_low", "emission_ab"))
 RG, RGs = U11["R_Gamma"]["value"], U11["R_Gamma"]["boot_std"]
-q_shift = max(q["q0_at_ell5"] for q in qv["U11 q_RP3"].values()) - qv["U11 q_RP3"][pub_conv]["q0_at_ell5"]
+q_shift = max(q["q0_at_ell5"] for k, q in qv["U11 q_RP3"].items() if k != "ajuste ponderado por F") - qv["U11 q_RP3"][pub_conv]["q0_at_ell5"]   # window conventions only
 coll = [v["ell_min_after_collapse"] for v in U9X["from_above"].values()]
 qm, qs = qv["U11 q_RP3"]["a,H medios geométricos (base del auditor)"], qv["U11 q_RP3"]["a,H del instante inicial del par"]
 qF = qv["U11 q_RP3"]["ajuste ponderado por F"]
+_like = [c for c in AUD["checks"] if not any(s in c["name"] for s in ("base del auditor", "derivada", "R_Γ^corr", "f_X")) and c.get("published")]
+aud_like = max(abs(c["audit"] / c["published"] - 1) for c in _like)          # like-for-like audit checks
+aud_RG = abs(AUD["checks"][0]["audit"] / AUD["checks"][0]["published"] - 1)
+U24R = json.loads((R / "u24" / "U24_RESULT.json").read_text())
+_u24g = max(U24R["delta_vs_D0"].values(), key=lambda d: abs(d["R_Gamma"]["delta"]))["R_Gamma"]          # largest |delta R_Gamma| (U24)
+_u24x = U24R["delta_vs_D0"]["Dstrong"]["R_xi"]
+U25R = json.loads((R / "u25" / "U25_RESULT.json").read_text()); _u25 = U25R["delta"]
+_b25 = {k: 2 * abs(_u25[k]["delta"]) + 4 * _u25[k]["sigma"] for k in ("R_Gamma", "R_xi")}        # b + 2 sigma_b (ESPEC_U25 enmienda 1)
+_b25s = {k: 2 * abs(_u25[k]["delta"]) + 4 * _u25[k]["se_seeds"] for k in ("R_Gamma", "R_xi")}     # same with the between-seed error
+_v24 = U24R["values"]; _perlen = (_v24["Dstrong"]["R_Gamma"] / _v24["Dstrong"]["R_xi"]) / (_v24["D0"]["R_Gamma"] / _v24["D0"]["R_xi"]) - 1
+
+
+def sci1(x):
+    """one significant digit, rounded up, as (mantissa, exponent) strings: 3.5e-3 -> ("4", "-3")"""
+    e = math.floor(math.log10(x)); m = math.ceil(x / 10 ** e)
+    if m == 10: m, e = 1, e + 1
+    return str(m), str(e)
 
 # (where, what, values from the results, LaTeX fragment of main.tex with {} for each value, source)
 ROWS = [
     # abstract
-    ("abstract", "R_xi bracket from both sides", (r2(U10B["R_xi_bracket_end"]["high"]), r2(U10B["R_xi_bracket_end"]["low"])), r"bracket it to $\Rxi\in[{},{}]$", "U10B"),
+    ("abstract", "R_xi from above / from below", (r2(U10B["R_xi_bracket_end"]["high"]), r2(U10B["R_xi_bracket_end"]["low"])),
+     r"give nearly the same ratio, $\Rxi={}$ (from above) and ${}$ (from below)", "U10B"),
     ("abstract", "bath share, sparse starts", (P(bath_RP3), P(bath_U1)), r"It is ${}\%$ ($\RP$) and ${}\%$ (U(1))", "U11"),
-    ("abstract", "R_Gamma stat / sampling", (r2(RG), r2(RGs), r2(0.05 * RG)), r"$\RG={}\pm{}\,({{\rm stat}})\pm{}\,({{\rm sampling}})$, independent", "U11, U18"),
-    ("abstract", "protocol gap, drained", (P(U10A["gap_G"]),), r"within $\approx{}\%$", "U10A"),
-    ("abstract", "per unit length", (P(per_len),), r"the emission per unit string length is within ${}\%$", "U10B"),
+    ("abstract", "R_Gamma stat / sampling", (r2(RG), r2(RGs), r2(0.05 * RG)), r"$\RG={}\pm{}\,({{\rm stat}})\pm{}\,({{\rm sampling}})$, with drained sparse and dense starts", "U11, U18"),
+    ("abstract", "protocol gap, drained", (P(U10A["gap_G"]),), r"dense starts ${}\%$ apart at $512^3$ (two seeds each)", "U10A"),
+    ("abstract", "per unit length", (P(per_len),), r"per unit string length the emission is within ${}\%$", "U10B"),
     ("abstract", "q and its convention shift", (r2(U11["q_RP3"]["q0_at_ell5"]), r2(U11["q_RP3"]["q0_std"]), r2(q_shift)), r"is $q={}\pm{}$ with our estimator, but an independent re-implementation shows that the convention used to map the physical fitting window onto lattice momenta shifts it by up to ${}$", "U11, audit"),
     # §2
     ("§2", "V1: maximum energy offset", (P(max(VAL["V1"][m]["max_rel_drift"] for m in ("RP3", "U1")), 1),), r"departs from its initial value by up to ${}\%$", "u2/validation.json V1"),
     ("§2", "V1: secular drift below 1e-3", ("3" if max(VAL["V1"][m]["secular_drift_after_first_block"] for m in ("RP3", "U1")) < 1e-3 else "?",), r"the subsequent secular drift is below $10^{{-{}}}$", "u2/validation.json V1"),
-    ("§2", "halving dtau changes R_Gamma by", (f"{J('u2/U2_RESULT.json')['systematics']['timestep_D']['delta']:.3f}",), r"halving it in a $128^3$ test changes $\RG$ by ${}$", "U2_RESULT systematics"),
+    ("§2", "halving dtau changes R_Gamma by", (f"{J('u2/U2_RESULT.json')['systematics']['timestep_D']['delta']:.3f}",), r"halving it in a $128^3$ test without the drain changes $\RG$ by ${}$", "U2_RESULT systematics"),
     ("§2", "V2: linear spectrum", (f"{max(v['rel_err'] for v in VAL['V2'].values()):.0e}".split("e-0")[0],), r"reproduced to ${}\times10^{{-5}}$", "u2/validation.json V2"),
+    ("§2", "trace-mode mass^2 (V2: frequency reproduced)", (f"{VAL['V2']['RP3:heavy_trace']['m2']:.2f}" if VAL["V2"]["RP3:heavy_trace"]["passed"] else "?",),
+     r"the trace mode $m^2={}$", "u2/validation.json V2"),
     ("§2", "V4: string-free Goldstone energy", (P(VAL["V4"]["RP3"]["comoving_energy_spread"], 1),), r"the comoving Goldstone energy is conserved to ${}\%$", "u2/validation.json V4"),
     ("§2", "U16: R_xi, 1 -> 0.6", (f"{dres['R_xi']['rel'] * 100:.2f}", f"{dres['R_xi']['sigma'] / dres['R_xi']['ref_r1'] * 100:.2f}"), r"changes $\Rxi$ by ${}\pm{}\%$ between", "U16"),
     ("§2", "U16: R_xi at 0.5", (P(am1["R_xi"]["rel"], 1),), r"and by ${}\%$ at $m_r a\,dx=0.5$", "U16 amendment 1"),
@@ -103,7 +123,7 @@ ROWS = [
     ("§2", "U18: dense sampling, change 1 -> 0.6", (P(r6["R_Gamma_local_dense"] / r1["R_Gamma_local_dense"] - 1), P(r6["R_Gamma_int_dense"] / r1["R_Gamma_int_dense"] - 1, 1)), r"change by ${}\%$ and ${}\%$ between", "U18"),
     ("§2", "U18: 30 snapshots, local", (SP(r1["R_Gamma_local_30"] / r1["R_Gamma_local_dense"] - 1, 1), SP(r6["R_Gamma_local_30"] / r6["R_Gamma_local_dense"] - 1, 1)), r"departs from its densely sampled value by ${}\%$ and ${}\%$", "U18"),
     ("§2", "U18: 30 snapshots, integral", (P(min(c["R_Gamma_int_30"] / c["R_Gamma_int_dense"] - 1 for c in (r1, r6))),), r"the integral one by up to ${}\%$", "U18"),
-    ("§2", "U18 -> sampling systematic", (P(0.05),), r"add a $\pm{}\%$ sampling systematic", "U18"),
+    ("§2", "U18 -> sampling systematic", (P(0.05),), r"adopt, after the data, a $\pm{}\%$ sampling systematic", "U18"),
     ("§2", "U16: volume", (f"{(3.33 / 2) ** 3:.1f}", f"{vol['R_xi']['delta'] / vol['R_xi']['L2'] * 100:.1f}", f"{vol['R_xi']['sigma'] / vol['R_xi']['L2'] * 100:.1f}",
                            f"{vol['R_Gamma']['delta'] / vol['R_Gamma']['L2'] * 100:+.1f}", f"{vol['R_Gamma']['sigma'] / vol['R_Gamma']['L2'] * 100:.1f}"),
      r"A box with ${}$ times more Hubble volumes changes $\Rxi$ and $\RG$ by ${}\pm{}\%$ and ${}\pm{}\%$", "U16 volume (L = 3.33 vs 2)"),
@@ -121,7 +141,7 @@ ROWS = [
      r"($d\xi/d\ell={}$ for $\RP$, ${}$ for U(1)), while the sparse starts increase (${}$, ${}$)", "U10B"),
     ("§3.2", "bracket at ell = 5.61", (r2(U10B["RP3"]["xi_low_end"]), r2(U10B["RP3"]["xi_ab_end"]), r2(U10B["U1"]["xi_low_end"]), r2(U10B["U1"]["xi_ab_end"]),
                                        r2(U10B["R_xi_bracket_end"]["high"]), r2(U10B["R_xi_bracket_end"]["low"])),
-     r"bracketed to $[{},{}]$ for $\RP$ and $[{},{}]$ for U(1), and the ratio is the same from both sides, $\Rxi\in[{},{}]$", "U10B"),
+     r"bracketed to $[{},{}]$ for $\RP$ and $[{},{}]$ for U(1), and the ratio observed in the two families is nearly the same, $\Rxi={}$ from above and ${}$ from below", "U10B"),
     # §3.3
     ("§3.3", "dense/sparse emission and rho_M/rho_a", (r2(e_RP3), r2(e_U1), P(U9X["relaxation"]["RP3"]["rel_at_end"]), P(U9X["relaxation"]["U1"]["rel_at_end"])),
      r"($\times{}$ for $\RP$, $\times{}$ for U(1)), with a bluer spectrum, and end the window with a ${}$--${}\%$ larger ratio", "U9_EXTRA"),
@@ -139,7 +159,7 @@ ROWS = [
     ("§3.4", "R_Gamma and R_xi drained", (r2(RG), r2(RGs), r2(0.05 * RG), r2(U11["R_xi"]["value"]), r2(U11["R_xi"]["boot_std"])),
      r"\RG&={}\pm{}\,({{\rm stat}})\pm{}\,({{\rm sampling}}),\\ \Rxi&={}\pm{},", "U11, U18"),
     ("§3.4", "R_Gamma total and exchange-corrected", (r2(RG), r2(math.hypot(RGs, 0.05 * RG)), r2(U11["R_Gamma_corr"]["value"]), r2(U11["R_Gamma_corr"]["boot_std"])),
-     r"that is $\RG={}\pm{}$ in total, and $\RG={}\pm{}\,({{\rm stat}})$", "U11"),
+     r"that is $\RG={}\pm{}$ with the statistical and snapshot-sampling errors combined, and $\RG={}\pm{}\,({{\rm stat}})$", "U11"),
     ("§3.4", "512^3 drained, sparse / dense, gaps", (r2(U10A["R_Gamma"]["drained_sparse"]["value"]), r2(U10A["R_Gamma"]["drained_sparse"]["boot_std"]),
                                                     r2(U10A["R_Gamma"]["drained_dense"]["value"]), r2(U10A["R_Gamma"]["drained_dense"]["boot_std"]), P(U10A["gap_G"]), P(U10A["gap_U9"])),
      r"the drained ratio is ${}\pm{}$ for sparse and ${}\pm{}$ for dense starts, a protocol gap of ${}\%$ against ${}\%$", "U10A"),
@@ -153,7 +173,22 @@ ROWS = [
     # §4, §5, conclusions
     ("§4", "bath share in the discussion", (P(bath_U1),), r"A ${}\%$ contamination", "U11"),
     ("§5", "verdict threshold quoted", ("1.69",), r"$\RG+\sigma\le{}$", "ESPEC_U11 (threshold, not a result)"),
-    ("§5", "audit reproduces to 1e-4", ("4" if abs(AUD["checks"][0]["audit"] / AUD["checks"][0]["published"] - 1) <= 1e-4 else "?",), r"to $\le10^{{-{}}}$ relative", "audit checks[0]"),
+    ("§5", "audit: like-for-like max and R_Gamma", (*sci1(aud_like), *sci1(aud_RG)), r"to $\le{}\times10^{{{}}}$ relative ($\RG$ itself to ${}\times10^{{{}}}$", "audit checks (like-for-like)"),
+    ("§5", "exchange-corrected R_Gamma: ours and audit's", (r2(U11["R_Gamma_corr"]["value"]), r2(AUD["U11_Rcorr"][0])), r"moves the exchange-corrected value from ${}$ to ${}$", "U11, audit"),
+    ("§3.4", "exchange-corrected with the audit's definition", (r2(AUD["U11_Rcorr"][0]),), r"(${}$ with the audit's definition of the per-seed exchange fraction)", "audit"),
+    ("abstract", "from above R_Gamma", (r2(U10B["emission_ab"]["R_Gamma"]), r2(U10B["emission_ab"]["R_Gamma_std"])), r"give $\RG={}\pm{}$, but per unit string length", "U10B emission_ab"),
+    ("§3.4", "from above R_Gamma and q", (r2(U10B["emission_ab"]["R_Gamma"]), r2(U10B["emission_ab"]["R_Gamma_std"]), r2(U10B["emission_ab"]["q_RP3"]["q0_at_ell5"]), r2(U10B["emission_ab"]["q_RP3"]["q0_std"])),
+     r"give $\RG={}\pm{}$ and $q_{{\RP}}(\ell=5)={}\pm{}$ in the same window", "U10B emission_ab"),
+    ("§3.4", "U(1) bath fade", (r2(T7["models"]["U1"]["slope_mean"]), r2(T7["models"]["U1"]["slope_sem"])), r"no significant fading (${}\pm{}$ per unit $\ell$", "T7_DRAIN_FADE"),
+    ("§3.4", "R_xi drained vs undrained; U24 drain-rate shift of R_xi", (f"{abs(U11['R_xi']['value'] / U6['R_xi']['value'] - 1) * 100:.1f}", f"{abs(_u24x['delta']) * 100:.1f}", f"{_u24x['sigma'] * 100:.1f}"),
+     r"the drained and undrained $\Rxi$ agree to ${}\%$, but in the preregistered drain test doubling its rate lowers $\Rxi$ by ${}\pm{}\%$", "U11, U6, U24"),
+    ("§3.4", "U24: largest drain effect on R_Gamma", (f"{abs(_u24g['delta']) * 100:.1f}", f"{_u24g['sigma'] * 100:.1f}"), r"changes $\RG$ by at most ${}\pm{}\%$, which bounds", "U24"),
+    ("§2", "U25: time step", (f"{_u25['R_Gamma']['delta'] * 100:+.2f}".replace("+", ""), f"{_u25['R_Gamma']['sigma'] * 100:.2f}", f"{_u25['R_xi']['delta'] * 100:+.2f}".replace("+", ""), f"{_u25['R_xi']['sigma'] * 100:.2f}"),
+     r"changes of ${}\pm{}\%$ in $\RG$ and ${}\pm{}\%$ in $\Rxi$", "U25"),
+    ("§2", "U25: bias + 2 sigma (bootstrap and between-seed)", (f"{_b25['R_Gamma'] * 100:.1f}", f"{_b25['R_xi'] * 100:.1f}", f"{_b25s['R_Gamma'] * 100:.1f}", f"{_b25s['R_xi'] * 100:.1f}"),
+     r"with bias plus $2\sigma$ of ${}\%$ and ${}\%$ (${}\%$ and ${}\%$ with the between-seed error)", "U25 (enmienda 1; ESPEC_U24 enmienda 1)"),
+    ("§3.4", "U24 Dstrong: R_Gamma shift and per-length shift", (f"{U24R['delta_vs_D0']['Dstrong']['R_Gamma']['delta'] * 100:.1f}", f"{U24R['delta_vs_D0']['Dstrong']['R_Gamma']['sigma'] * 100:.1f}", P(_perlen)),
+     r"the emission ratio moves by ${}\pm{}\%$ because both models respond alike; the emission per unit string length, $\RG/\Rxi$, therefore moves by about ${}\%$", "U24"),
     ("concl.", "per unit length, R_Gamma total", (P(per_len), r2(RG), r2(math.hypot(RGs, 0.05 * RG))), r"within ${}\%$ as efficiently, giving $\RG={}\pm{}$", "U10B, U11"),
     ("concl.", "bath share", (P(bath_RP3), P(bath_U1)), r"(${}$--${}\%$ for sparse starts", "U11"),
 ]
@@ -161,7 +196,8 @@ ROWS = [
 # Numbers in the text that are set-up, parameters, definitions or literature values, not results of this work.
 SETUP = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30", "70", "100",
          "128", "192", "256", "320", "384", "512", "576", "768",                     # lattice sizes
-         "0.24", "0.25", "0.5", "0.6", "0.75", "1.3", "0.05", "2.5", "3.5", "3.8", "4.6", "4.56",   # parameters, windows
+         "400",                                                                      # model constants lambda = 320, lambda_P = 192, Z_Q = 400 (ESPEC_U2)
+         "0.24", "0.25", "0.5", "0.6", "0.75", "1.3", "0.05", "2.5", "3.5", "3.8", "4.6", "4.56", "3.4", "4.1",   # parameters, windows (3.4, 4.1: drain ends of U24)
          "5.61", "5.65", "5.66", "5.95", "5.6", "1.5", "2.0", "1.6", "0.6", "8", "9",         # ell values, literature, round values
          "1.69", "1e-3", "-3", "-5", "-4", "-1", "-0.05", "6e-05"}
 
