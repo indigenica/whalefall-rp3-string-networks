@@ -72,10 +72,10 @@ with plt.rc_context({"font.size": 9, "axes.labelsize": 9, "legend.fontsize": 7, 
     for a, mod, title in ((ax[0], "RP3", r"(a) RP$^3$"), (ax[1], "U1", "(b) U(1)")):
         lo, hi = _load(f"{mod}_N576_s6*_xi0.5_dr.json"), _load(f"{mod}_N576_s7*_ab.json")
         for i, r in enumerate(lo):
-            a.plot(*_series(r), color=C_U1, lw=0.7, alpha=0.7, label=r"from below ($\xi_i=0.5$, U11)" if i == 0 else None)
+            a.plot(*_series(r), color=C_U1, lw=0.7, alpha=0.7, label=r"from below ($\xi_i=0.5$)" if i == 0 else None)
         for i, r in enumerate(hi):
             a.plot(*_series(r), color=C_RP3, lw=0.9, ls="-" if r["xi_init"] == 3 else "--",
-                   label=(r"from above ($\xi_i=3$, $\ell_i=3.5$, U10b)" if r["xi_init"] == 3 else r"from above ($\xi_i=6$)")
+                   label=(r"from above ($\xi_i=3$, $\ell_i=3.5$)" if r["xi_init"] == 3 else r"from above ($\xi_i=6$)")
                    if (i == 0 or r["xi_init"] == 6) else None)
         a.axvspan(4.36, 5.61, color="0.92", zorder=0)
         a.set_xlim(3.4, 5.8); a.set_ylim(0, 3.2 if mod == "RP3" else 2.4); a.set_xlabel(r"$\ell$"); a.set_ylabel(r"$\xi$")

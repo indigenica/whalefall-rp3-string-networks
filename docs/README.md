@@ -17,7 +17,11 @@ and appended at the end. Results are in `network/results/`.
 | T7 | Fading of the bath contribution within the window | `network/results/u4/T7_DRAIN_FADE.json` | §3.3 |
 | U16 | Resolution (192–384³ at fixed LH) and volume (×4.6 Hubble volumes) | `network/results/u16/` | §2 Validations |
 | U18 | Snapshot sampling of the local and integral emission estimators | `network/results/u18/` | §2 Validations, R_Γ sampling error |
+| U5d | Two more U(1) seeds at 768³ (63, 64) for the growth rate | `network/results/u4/runs/U1_N768_s6[34]_*.json` | Table I |
+| U24 | Drain sensitivity at 384³: end and rate of the drain, three seeds | `network/results/u24/` | §3.4, limitation (ii) |
+| U25 | Time step dτ/2 in the drained production protocol at 384³ | `network/results/u25/` | §2 Validations |
+| U19b | String–wall collapse with an explicit breaking mass, RP³ and U(1) at 512³ (preliminary; not part of this paper's results) | `network/results/u19b/U19B_RESULT.json` | §6, last sentence |
 | Audit U4–U11 | Independent re-implementation of the estimators | `audit/u4_u11/` | §5 |
 
-`informes/NOTA_DRENAJE.md` explains why draining the initial bath removes a lattice artefact and not part of the
+`informes/NOTA_DRENAJE.md` explains why draining the initial bath removes an artefact of the initial state and not part of the
 cosmological production (§3.3, last paragraph).

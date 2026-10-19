@@ -46,7 +46,8 @@ make validate  # kernel validations V1-V4 (linear spectrum, string detector, ene
 **Production runs.** `make network-u2` and `make network-u3` reproduce the 256³ networks (a few CPU hours, ~1.5 GB).
 The 512–768³ networks of U4b–U11, U16 and U18 need ~30–50 GB of RAM and tens of cores; the scripts are
 `network/u4b_produce.py`, `network/u16_produce.py` and `network/u18_produce.py` (one network per call, resumable), and the
-analyses `network/u*_analyze.py`. Every analysis script reads only the stored summaries in `network/results/`.
+analyses `network/u*_analyze.py`. The 384³ drain and time-step tests (U24, U25) fit in 16 GB and four cores
+(`network/u24_produce.py`, which skips finished networks, and `network/u25_produce.py`). Every analysis script reads only the stored summaries in `network/results/`.
 
 ## Layout
 
@@ -63,15 +64,17 @@ results/s3_sectors.json   tree-level widths of the massive modes (used by networ
 EXPORT_PROVENANCE.json    source commit and sha256 of every file (see below)
 ```
 
-`docs/README.md` maps the internal study codes (U2 … U18) to the sections of the paper.
+`docs/README.md` maps the internal study codes (U2 … U25) to the sections of the paper.
 
 ## Preregistration and audit
 
 Every analysis that gives a verdict was written as a dated specification (estimators, windows, thresholds, verdict
 logic) before its networks were produced; later changes are dated amendments at the end of the same file, never
 rewrites. The specifications and reports are the original records and are in Spanish. The audit in `audit/u4_u11/`
-re-implemented the estimators without reading the analysis code and reproduces every density, emission and drain
-number of the production networks to ≤ 10⁻⁴; the resolution (U16) and sampling (U18) tests were not audited.
+re-implemented the estimators without reading the analysis code and reproduces the density, emission and drain
+numbers of the production networks to ≤ 4×10⁻³ relative (R_Γ itself to 2×10⁻⁵); the resolution (U16), sampling (U18),
+drain (U24) and time-step (U25) tests were not audited. The audit was carried out by a separate session of the AI
+assistant used for the code (Claude Code), independent of the audited code but not of the tool (paper, §5).
 
 ## Provenance
 
