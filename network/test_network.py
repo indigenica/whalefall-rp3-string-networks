@@ -75,7 +75,32 @@ def test_drain_rate_and_tau_grid_identity():
     assert [x["tau"] for x in r2["rows"]] == [x["tau"] for x in r0["rows"]] and r2["tau0"] == r0["tau0"]
 
 
-TESTS = [test_network_kernel_small, test_network_reproduces_u2_run, test_distance_slab_exact, test_drain_rate_and_tau_grid_identity]
+def test_evolve_lowmem_bit_identical():
+    """U19c V0' (ESPEC_U19c): evolve_lowmem (no force buffer) gives the same f and p as evolve, bit for bit: 40 steps at N = 32
+    in an expanding background, RP3 and U(1), plain, with the U19 tilt and the U19b late frozen core, and with the U10a drain,
+    in one call and in two calls of 20"""
+    need_gcc()
+    import ctypes, math
+    import lattice as Lt
+    L = Lt.lib(); L.set_tilt.argtypes = [ctypes.c_double]; L.set_tilt.restype = None
+    for model in (1, 0):
+        m = math.sqrt(Lt.M2[model]); s = 1.0 / (m * 16.0)
+        for eps, tf, dtd in ((0.0, 0.0, 0.0), (0.002, 12.0, 0.0), (0.0, 0.0, 14.0)):
+            f0, p0 = Lt.initial(model, 32, 4.0, 61)
+            L.set_tilt(eps); L.set_core_late(tf); L.set_damp(dtd, m if dtd else 0.0)
+            fa, pa = f0.copy(), p0.copy(); L.evolve(model, 32, fa, pa, np.empty_like(fa), 10.0, 0.25, s, 40)
+            fb, pb = f0.copy(), p0.copy(); L.evolve_lowmem(model, 32, fb, pb, 10.0, 0.25, s, 40)
+            fc, pc = f0.copy(), p0.copy(); L.evolve_lowmem(model, 32, fc, pc, 10.0, 0.25, s, 20); L.evolve_lowmem(model, 32, fc, pc, 15.0, 0.25, s, 20)
+            fd, pd = f0.copy(), p0.copy(); sc = np.empty_like(fd)
+            L.evolve(model, 32, fd, pd, sc, 10.0, 0.25, s, 20); L.evolve(model, 32, fd, pd, sc, 15.0, 0.25, s, 20)
+            L.set_tilt(0.0); L.set_core_late(0.0); L.set_damp(0.0, 0.0)
+            assert np.array_equal(fa, fb) and np.array_equal(pa, pb), (model, eps, tf, dtd, "one call")
+            assert np.array_equal(fd, fc) and np.array_equal(pd, pc), (model, eps, tf, dtd, "two calls")
+            assert not np.array_equal(pa, p0)
+
+
+TESTS = [test_network_kernel_small, test_network_reproduces_u2_run, test_distance_slab_exact, test_drain_rate_and_tau_grid_identity,
+         test_evolve_lowmem_bit_identical]
 
 def run_all(tests):
     """PASS / SKIP / FAIL per test; 'ALL PASSED' only if nothing failed and nothing was skipped.  With REQUIRE_ALL=1 (CI,

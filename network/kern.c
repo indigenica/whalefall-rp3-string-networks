@@ -143,6 +143,50 @@ void evolve(int model, int N, float *f, float *p, float *scratch, double tau, do
     }
 }
 
+/* U19c (ESPEC_U19c): the same KDK leapfrog without the force buffer (one third less memory, twice the force evaluations).
+   kick() computes, site by site, the force of force() rounded to float exactly as force() stores it, and adds
+   (float)(coef * F) to p as evolve() does with scratch; so evolve_lowmem() is bit-identical to evolve(). */
+static void kick(int model, int N, const float *f, float *p, double a, double ap, double coef) {
+    const long V = (long)N * N * N; const int C = model ? 10 : 2; const double a2 = a * a, ap2 = ap * ap;
+    #pragma omp parallel for schedule(static)
+    for (int z = 0; z < N; z++) {
+        int zp = (z + 1) % N, zm = (z + N - 1) % N;
+        double q[10], g[10];
+        for (int y = 0; y < N; y++) {
+            int yp = (y + 1) % N, ym = (y + N - 1) % N;
+            for (int x = 0; x < N; x++) {
+                int xp = (x + 1) % N, xm = (x + N - 1) % N;
+                long i = ((long)z * N + y) * N + x;
+                for (int c = 0; c < C; c++) q[c] = f[c * V + i];
+                if (model) rp3_grad(q, g); else u1_grad(q, g);
+                if (EPS_G != 0.0 && ap2 != a2) g[0] += EPS_G * (1.0 - a2 / ap2);
+                for (int c = 0; c < C; c++) {
+                    const float *fc = f + c * V;
+                    double lap = fc[((long)z * N + y) * N + xp] + fc[((long)z * N + y) * N + xm] + fc[((long)z * N + yp) * N + x]
+                               + fc[((long)z * N + ym) * N + x] + fc[((long)zp * N + y) * N + x] + fc[((long)zm * N + y) * N + x] - 6.0 * q[c];
+                    float F = (float)(a2 * (lap - ap2 * g[c]));
+                    p[c * V + i] += (float)(coef * F);
+                }
+            }
+        }
+    }
+}
+
+void evolve_lowmem(int model, int N, float *f, float *p, double tau, double dtau, double s, int nsteps) {
+    const long V = (long)N * N * N; const int C = model ? 10 : 2; const long n = C * V;
+    double tf = tau;                          /* the time at which evolve() computed the force it kicks with: tau, then the previous t1 */
+    for (int k = 0; k < nsteps; k++) {
+        double t0 = tau + k * dtau, th = t0 + 0.5 * dtau, t1 = t0 + dtau;
+        double ih = 1.0 / (AOF(th) * AOF(th));
+        kick(model, N, f, p, AOF(tf), APF(tf), 0.5 * dtau);
+        #pragma omp parallel for schedule(static)
+        for (long i = 0; i < n; i++) f[i] += (float)(dtau * ih * p[i]);
+        kick(model, N, f, p, AOF(t1), APF(t1), 0.5 * dtau); tf = t1;
+        if (DAMP_TAU > 0 && t1 < DAMP_TAU && ((long)llround(t1 / dtau)) % DAMP_EVERY == 0)
+            damp_massive(model, N, f, p, exp(-DAMP_G * AOF(t1) * dtau * DAMP_EVERY));
+    }
+}
+
 /* total energy (physical density * a^4, i.e. conformal-frame energy  sum[ p^2/(2a^4)*a^2 ... ]):
    returns comoving energy E = sum [ (pi^2/a^2)/2 + (grad phi)^2/2 * a^2/a^2... ]  -- we return physical mean densities:
    out[0]=kinetic, out[1]=gradient, out[2]=potential (mean over sites, physical units)                                */

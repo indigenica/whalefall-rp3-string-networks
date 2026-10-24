@@ -21,6 +21,7 @@ def lib():
         fp = np.ctypeslib.ndpointer(np.float32, flags="C_CONTIGUOUS"); dp = np.ctypeslib.ndpointer(np.float64, flags="C_CONTIGUOUS")
         up = np.ctypeslib.ndpointer(np.uint8, flags="C_CONTIGUOUS"); I, D = ctypes.c_int, ctypes.c_double
         L.evolve.argtypes = [I, I, fp, fp, fp, D, D, D, I]; L.evolve.restype = None
+        L.evolve_lowmem.argtypes = [I, I, fp, fp, D, D, D, I]; L.evolve_lowmem.restype = None      # U19c
         L.energy.argtypes = [I, I, fp, fp, D, dp]; L.energy.restype = None
         L.principal.argtypes = [I, fp, fp, ctypes.c_void_p]; L.principal.restype = None
         L.plaquettes.argtypes = [I, I, fp, up]; L.plaquettes.restype = ctypes.c_long
@@ -34,8 +35,38 @@ def lib():
         L.damp_massive.argtypes = [I, I, fp, fp, D]; L.damp_massive.restype = None
         L.exchange.argtypes = [I, I, fp, fp, D, ctypes.c_void_p, dp]; L.exchange.restype = None
         L.normal_velocity.argtypes = [I, I, fp, fp, fp, D, fp]; L.normal_velocity.restype = None
-        _L = L
+        _L = _JaxEvolve(L) if os.environ.get("WHALEFALL_BACKEND") == "jax" else L
     return _L
+
+
+class _JaxEvolve:
+    """WHALEFALL_BACKEND=jax: evolve() runs network/jax_kernel.py (GPU if JAX sees one); every other call, and the set_*
+    switches (kept in sync), go to kern.c.  f and p stay numpy arrays, updated in place as kern.c does."""
+    def __init__(self, L):
+        L.set_tilt.argtypes = [ctypes.c_double]; L.set_tilt.restype = None
+        self._L, self._tilt, self._par = L, True, dict(eps_g=0.0, tau_c=0.0, tau_f=0.0, damp_tau=0.0, damp_g=0.0)
+
+    def __getattr__(self, k):
+        return getattr(self._L, k)
+
+    def set_tilt(self, e): self._par["eps_g"] = float(e); self._L.set_tilt(e)
+    def set_core(self, t): self._par["tau_c"] = float(t); self._L.set_core(t)
+    def set_core_late(self, t): self._par["tau_f"] = float(t); self._L.set_core_late(t)
+    def set_damp(self, t, g): self._par.update(damp_tau=float(t), damp_g=float(g)); self._L.set_damp(t, g)
+
+    def evolve(self, model, N, f, p, scratch, tau, dtau, s, nsteps):
+        import jax.numpy as jnp
+        import jax_kernel as JK
+        C = NCOMP[model]
+        fj, pj = JK.evolve(model, jnp.asarray(f.reshape(C, N, N, N)), jnp.asarray(p.reshape(C, N, N, N)), tau, dtau, s, int(nsteps), **self._par)
+        f[...] = np.asarray(fj).reshape(f.shape); p[...] = np.asarray(pj).reshape(p.shape)
+
+    def evolve_lowmem(self, model, N, f, p, tau, dtau, s, nsteps):
+        import jax.numpy as jnp
+        import jax_kernel as JK
+        C = NCOMP[model]
+        fj, pj = JK.evolve_lowmem(model, jnp.asarray(f.reshape(C, N, N, N)), jnp.asarray(p.reshape(C, N, N, N)), tau, dtau, s, int(nsteps), **self._par)
+        f[...] = np.asarray(fj).reshape(f.shape); p[...] = np.asarray(pj).reshape(p.shape)
 
 
 # ---------- initial conditions ----------
