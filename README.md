@@ -79,7 +79,7 @@ assistant used for the code (Claude Code), independent of the audited code but n
 
 ## Provenance
 
-This repository is a one-way export of the larger project [`indigenica/whalefall`](https://github.com/indigenica/whalefall),
+This repository is a one-way export of the larger project [`indigenica/whalefall-chain`](https://github.com/indigenica/whalefall-chain),
 a toy cosmology in which this network feeds a dark-matter component. Nothing here depends on that model.
 `EXPORT_PROVENANCE.json` records the whalefall commit of each export and the hash of every file. Changes are made
 in whalefall and exported again; files are not edited here.
