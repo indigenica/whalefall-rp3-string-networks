@@ -240,6 +240,7 @@ CONTEXT = [
     r"with the $\approx30$ snapshots per run used for all production networks",
     r"about $30\%$ in large U(1) simulations",
     r"His $\zeta$ is our $\xi$ (string length from pierced plaquettes with the same factor $2/3$, times $t^2/V$)",
+    r"(Claude Opus 5.5, Anthropic)",                                              # model version required by the APS AI policy
 ]
 
 # Numbers in the text that are set-up, parameters, definitions or literature values, not results of this work.

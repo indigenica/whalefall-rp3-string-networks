@@ -75,7 +75,7 @@ rewrites. The specifications and reports are the original records and are in Spa
 re-implemented the estimators without reading the analysis code and reproduces the density, emission and drain
 numbers of the production networks to ≤ 4×10⁻³ relative (R_Γ itself to 2×10⁻⁵); the resolution (U16), sampling (U18),
 drain (U24) and time-step (U25) tests were not audited. The audit was carried out by a separate session of the AI
-assistant used for the code (Claude Code), independent of the audited code but not of the tool (paper, §5).
+assistant used for the code (Claude Opus 5.5, Anthropic), independent of the audited code but not of the tool (paper, §5).
 
 ## Provenance
 
