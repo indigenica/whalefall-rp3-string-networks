@@ -21,19 +21,19 @@
 
 \begin{document}
 
-\title{Density and Goldstone emission of an $\RP\simeq{\rm SO}(3)$ global-string network relative to U(1), and a massive-bath systematic of the emission estimator}
+\title{Density and Goldstone emission of an \texorpdfstring{$\RP\simeq{\rm SO}(3)$}{RP3 = SO(3)} global-string network relative to U(1), and a massive-bath systematic of the emission estimator}
 \author{Jose Bautista\,\orcidlink{0009-0001-6655-4028}}
 \email{jozebautista@gmail.com}
 \affiliation{Independent researcher}
-\date{October 25, 2026}
+\date{November 19, 2026}
 
 \begin{abstract}
 We simulate networks of global $\Ztwo$ strings whose vacuum manifold is $\RP\simeq{\rm SO}(3)$, produced by a real symmetric-tensor order parameter, and compare them with U(1) axion-string networks evolved in the same code, with the same Goldstone decay constant and core mass, at $576^3$ (U(1) control also at $768^3$, where it passes preregistered scaling gates).
-The string-density ratio is $\Rxi\simeq1.6$ for every protocol tested: sparse and dense starts, with and without draining the initial massive radiation, and networks started late and dense that approach the attractor from above give nearly the same ratio, $\Rxi=1.57$ (from above) and $1.68$ (from below) at $\ell=\ln(m_r/H)=5.61$.
+The string-density ratio is $\Rxi\simeq1.6$ for every protocol tested: sparse and dense starts, with and without draining the initial massive radiation, and networks started late and dense, whose density decreases through the window, give nearly the same ratio, $\Rxi=1.57$ (from above) and $1.68$ (from below) at $\ell=\ln(m_r/H)=5.61$; the asymptotic ratio at cosmological scale separation is not determined.
 We identify a systematic of the standard kinetic Goldstone-emission estimator: the conversion of massive radiation left by the initial state into Goldstones is counted as string emission.
-It is $19\%$ ($\RP$) and $28\%$ (U(1)) of the measured emission for sparse starts and more than half for dense ones; for U(1) two independent methods, a drain of the massive modes and a direct measurement of the radial-to-Goldstone transfer, agree.
+With our initial conditions it is $19\%$ ($\RP$) and $28\%$ (U(1)) of the measured emission for sparse starts. For the dense U(1) start, the drain and a direct radial-to-Goldstone transfer measurement both put it above half. The exploratory dense $\RP$ comparison across resolutions suggests a similar share.
 With the bath drained, the emission ratio is $\RG=1.56\pm0.09\,({\rm stat})\pm0.08\,({\rm sampling})$, with drained sparse and dense starts $7\%$ apart at $512^3$ (two seeds each); networks started late and dense, still transient in our window, give $\RG=1.30\pm0.14$, but per unit string length the emission is within $13\%$ of U(1) from both sides of the attractor.
-The spectral slope of the $\RP$ emission at $\ell=5$ is $q=0.87\pm0.06$ with our estimator, but an independent re-implementation shows that the convention used to map the physical fitting window onto lattice momenta shifts it by up to $0.04$, and a fit weighted by the spectrum gives $0.94\pm0.04$; we therefore quote $q$ as compatible with $1$.
+The spectral slope of the $\RP$ emission at $\ell=5$ is $q=0.87\pm0.06$ with our estimator, but a re-implementation independent of the analysis code shows that the convention used to map the physical fitting window onto lattice momenta shifts it by up to $0.04$, and a fit weighted by the spectrum gives $0.94\pm0.04$; we therefore quote $q$ as compatible with $1$.
 All verdict-bearing analyses were preregistered (the snapshot-sampling systematic was adopted after the data) and are reproducible from the released data.
 \end{abstract}
 
@@ -51,11 +51,11 @@ Scaling of ${\rm SU}(N)/\mathbb{Z}_N$ global-string networks was established rec
 Here we measure, in the same code and with matched decay constant and core mass, the string density and the Goldstone emission of a network with vacuum manifold $\RP\simeq{\rm SO}(3)\simeq{\rm SU}(2)/\Ztwo$ relative to a U(1) network.
 The model arises in a toy cosmology in which the string network, through its collapse, feeds a pseudo-Goldstone dark-matter component~\cite{whalefall_repo}, but the results below do not depend on that model.
 Three results are, to our knowledge, new:
-(i) the density ratio $\Rxi$ and its robustness, including an approach to the attractor from above;
+(i) the same-code density ratio $\Rxi$ and its stability across protocols, including networks that approach the attractor from above, which bracket the density within our window;
 (ii) a quantified systematic of the kinetic emission estimator, the conversion of the initial massive bath, whose size is set mainly by the initial state;
 (iii) the emission ratio $\RG$ and spectral slope $q$ with the initial bath drained, with an estimator systematic for $q$ found by an independent audit.
 
-Every analysis that yields a verdict was preregistered, with thresholds and verdict logic fixed before the data, and the measurements behind the main results were audited by a re-implementation independent of the audited code (\S\ref{sec:repro}).
+Every analysis that yields a verdict was preregistered, with thresholds and verdict logic fixed before the data, and the measurements behind the main results were audited by a re-implementation independent of the audited code; this checks the implementation and is not expert peer review (\S\ref{sec:repro}).
 
 %=====================================================================
 \section{Model and lattice set-up}
@@ -156,9 +156,8 @@ Because it inflated U(1) more, the undrained $\RG=1.39\pm0.06$ was biased low.
 In the drained U(1) networks the measured exchange is below $2.5\%$ of the emission.
 Within the window the bath contribution fades: the drained-to-undrained emission ratio of $\RP$ rises by $0.28\pm0.08$ per unit $\ell$ (U(1): $0.04\pm0.03$), while the massive radiation of the network itself, which the drain (switched off at $\ell_d=3.8$) no longer removes, grows.
 
-The drain removes an artefact of the initial state rather than part of the cosmological production: the massive modes decay at tree level well before the late epochs relevant for cosmology, into hard Goldstones that redshift as radiation.
-The systematic is, however, intrinsic to the kinetic estimator at accessible $\ell$.
-Its size is set mainly by the initial state, not by the number of massive modes: with sparse starts the bath is a smaller share of the emission for $\RP$, with seven massive modes, than for U(1), with one, and with dense starts it is more than half in both.
+We read what the drain removes as an artefact of the initial state rather than part of the cosmological production: the massive modes decay at tree level well before the late epochs relevant for cosmology, into hard Goldstones that redshift as radiation. The drain is, however, a numerical control that also acts on the network, and its effect enters the systematics (Limitations (ii)).
+The systematic affects the kinetic estimator whenever a massive bath is still converting into Goldstones. The initial state matters: sparse $\RP$ starts have seven massive modes but a smaller measured bath fraction than the sparse U(1) starts with one.
 
 \begin{figure*}[t]
 \centering
@@ -198,9 +197,12 @@ Our dynamic range ($\ell\le6$) is below the state of the art for U(1) ($\ell\app
 
 \paragraph{Implications of the bath systematic for U(1).}
 The kinetic estimator is standard in U(1) studies.
-A $28\%$ contamination at $\ell\lesssim6$ for sparse starts, and more than half for dense ones, suggests that emission rates and spectra measured at small $\ell$ should be checked against a drained or exchange-corrected estimator, especially where the initial state is far from the vacuum.
-In $\RP$ the bath share fades within our window, but in U(1) we see no significant fading ($0.04\pm0.03$ per unit $\ell$ in the drained-to-undrained ratio), so large-$\ell$ simulations should not be assumed free of it.
+In our U(1) networks, the initial massive bath accounts for $28\%$ of the measured emission for sparse starts at $\ell\lesssim6$ and more than half in the dense comparison. The exploratory dense $\RP$ comparison across resolutions suggests a similar share to dense U(1). These results motivate checking small-$\ell$ emission rates and spectra with a drained or exchange-corrected estimator, especially for initial states far from the vacuum.
+In $\RP$ the bath share fades within our window, but in U(1) we see no significant fading ($0.04\pm0.03$ per unit $\ell$ in the drained-to-undrained ratio), so large-$\ell$ simulations should not be assumed free of it. The percentages belong to our initial conditions and estimator; they are not a universal correction to transfer to other simulations.
 It is distinct from the contribution of the string fields themselves to the commonly used axion number-density measure, about $30\%$ in large U(1) simulations~\cite{Correia2025spectrum}: the bath is free massive radiation away from the strings.
+
+\paragraph{Outlook: the string--wall collapse.}
+With an explicit symmetry-breaking mass the same code also follows the collapse of the string--wall network. A preliminary measurement, reported separately and not part of the analysis validated here (four networks per model at $512^3$, not independently audited), finds that $\RP$ and U(1) leave the same soft Goldstone population per unit string energy, within a ratio of $1.07$, so the denser $\RP$ network yields more quanta only because it has more strings; the collapse and its extrapolation are reported in Ref.~\cite{whalefall_repo}.
 
 \paragraph{Limitations.}
 (i) The $\RP$ runs reach $\ell=5.66$; nothing here extrapolates to cosmological $\ell\approx70$.
@@ -216,7 +218,8 @@ It is distinct from the contribution of the string fields themselves to the comm
 Each analysis was written as a dated specification (thresholds, windows, estimators, verdict logic) before the corresponding networks were produced, and later changes are dated amendments.
 The preregistered verdicts are: attractor gates passed for the U(1) control at $768^3$; genuine growth within the window for sparse and dense starts; an indeterminate verdict for the first drain test at $512^3$ (a residual massive excess); for the drained $576^3$ networks, an emission ratio below the threshold set by the cosmological application ($\RG+\sigma\le1.69$; $\RG+\sigma=1.66$ with the statistical error and $1.68$ with the combined one, a margin of only $0.01$, less than the bound on the drain dependence, so this verdict is marginal) and $q<1$ (the latter not robust, \S\ref{sec:results}); and a bracketed attractor in both models for the late dense starts.
 An audit independent of the audited code re-implemented the estimators from the specifications alone, in a separate session without access to the analysis scripts, and reproduced the density, emission and drain numbers of the production networks to $\le4\times10^{-3}$ relative ($\RG$ itself to $2\times10^{-5}$; the later resolution and sampling tests were not audited); it found the $q$ convention dependence reported above and a definitional difference in the per-seed exchange fraction, which leaves $\RG$ unchanged but moves the exchange-corrected value from $1.54$ to $1.56$.
-Code, network summaries, specifications, audits and figure scripts are public~\cite{rp3_repo}, and a script there recomputes every number quoted in this paper from the stored results and checks it against the text.
+\paragraph{Data availability.}
+The simulation and analysis code, network summaries, preregistrations, audits and figure scripts are available in the companion repository~\cite{rp3_repo}. The archived summaries are the inputs to the script that checks the quoted results and to the figure scripts.
 \paragraph{Use of AI tools.} Most of the code, the preregistration documents, the audit and the revisions of this text were produced in an iterative workflow with an AI assistant (Claude Opus 5.5, Anthropic), under the direction of the author, who chose the scientific questions, the model ingredients, the tests and which results to accept.
 The audit and the external reviews were carried out in separate sessions of the same assistant or of other assistants, including those of other providers, in a red-teaming approach; the audit above was independent of the audited code but not of the tool.
 The output was verified by tests and reproduction checks run in continuous integration, by the re-implementation of the audit, and by the script that recomputes every number in the text; the preregistration was adopted partly to make this workflow checkable.
@@ -224,10 +227,9 @@ The author takes full responsibility for the content.
 
 \section{Conclusions}
 
-A global-string network with vacuum manifold $\RP\simeq{\rm SO}(3)$ is $\approx1.6$ times denser than a U(1) network with the same decay constant and core mass, robustly across protocols and from both sides of the attractor, and per unit length it radiates Goldstones within $13\%$ as efficiently, giving $\RG=1.56\pm0.12$ (statistical and snapshot-sampling errors combined) once the initial massive bath is removed.
-The bath, counted as emission by the standard kinetic estimator, is a sizeable systematic at accessible $\ell$ ($19$--$28\%$ for sparse starts, more than half for dense ones).
+A global-string network with vacuum manifold $\RP\simeq{\rm SO}(3)$ is $\approx1.6$ times denser than a U(1) network with the same decay constant and core mass over the simulated range ($\ell\le5.66$), for every protocol tested, including sparse starts and late dense ones that bracket the density; the asymptotic ratio is not determined. Per unit length it radiates Goldstones within $13\%$ as efficiently, giving $\RG=1.56\pm0.12$ (statistical and snapshot-sampling errors combined) once the initial massive bath is removed.
+The bath, counted as emission by the standard kinetic estimator, is a sizeable systematic at accessible $\ell$ ($19$--$28\%$ for our sparse starts). It accounts for more than half of the measured emission in the dense U(1) comparison, and the exploratory dense $\RP$ comparison points to a similar fraction.
 For networks approaching the attractor from below the emission spectrum is close to scale invariant, with a slope at $\ell=5$ that is compatible with $1$ once the estimator convention is accounted for; the late dense starts, still transient, give a much harder spectrum.
-With an explicit symmetry-breaking mass the same code also follows the collapse of the string--wall network: in a preliminary measurement (four networks per model at $512^3$, not independently audited) $\RP$ and U(1) leave the same soft Goldstone population per unit string energy, within a ratio of $1.07$, so the denser $\RP$ network yields more quanta only because it has more strings; the collapse and its extrapolation are reported in Ref.~\cite{whalefall_repo}.
 
 \bibliographystyle{apsrev4-2}
 \bibliography{refs}

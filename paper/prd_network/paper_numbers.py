@@ -118,11 +118,11 @@ ROWS = [
     # abstract
     ("abstract", "R_xi from above / from below", (r2(U10B["R_xi_bracket_end"]["high"]), r2(U10B["R_xi_bracket_end"]["low"])),
      r"give nearly the same ratio, $\Rxi={}$ (from above) and ${}$ (from below)", "U10B"),
-    ("abstract", "bath share, sparse starts", (P(bath_RP3), P(bath_U1)), r"It is ${}\%$ ($\RP$) and ${}\%$ (U(1))", "U11"),
+    ("abstract", "bath share, sparse starts", (P(bath_RP3), P(bath_U1)), r"With our initial conditions it is ${}\%$ ($\RP$) and ${}\%$ (U(1))", "U11"),
     ("abstract", "R_Gamma stat / sampling", (r2(RG), r2(RGs), r2(SAMP * RG)), r"$\RG={}\pm{}\,({{\rm stat}})\pm{}\,({{\rm sampling}})$, with drained sparse and dense starts", "U11, U18"),
     ("abstract", "protocol gap, drained", (P(U10A["gap_G"]),), r"dense starts ${}\%$ apart at $512^3$ (two seeds each)", "U10A"),
     ("abstract", "per unit length", (P(per_len),), r"per unit string length the emission is within ${}\%$", "U10B"),
-    ("abstract", "q and its convention shift", (r2(U11["q_RP3"]["q0_at_ell5"]), r2(U11["q_RP3"]["q0_std"]), r2(q_shift)), r"is $q={}\pm{}$ with our estimator, but an independent re-implementation shows that the convention used to map the physical fitting window onto lattice momenta shifts it by up to ${}$", "U11, audit"),
+    ("abstract", "q and its convention shift", (r2(U11["q_RP3"]["q0_at_ell5"]), r2(U11["q_RP3"]["q0_std"]), r2(q_shift)), r"is $q={}\pm{}$ with our estimator, but a re-implementation independent of the analysis code shows that the convention used to map the physical fitting window onto lattice momenta shifts it by up to ${}$", "U11, audit"),
     # §2
     ("§2", "V1: maximum energy offset", (P(max(VAL["V1"][m]["max_rel_drift"] for m in ("RP3", "U1")), 1),), r"departs from its initial value by up to ${}\%$", "u2/validation.json V1"),
     ("§2", "V1: secular drift below 1e-3", ("3" if max(VAL["V1"][m]["secular_drift_after_first_block"] for m in ("RP3", "U1")) < 1e-3 else "?",), r"the subsequent secular drift is below $10^{{-{}}}$", "u2/validation.json V1"),
@@ -189,7 +189,7 @@ ROWS = [
      r"give ${}\pm{}$ and ${}\pm{}$, and a fit weighted by $F$ gives ${}\pm{}$", "audit q_variants"),
     ("§3.4", "two seeds", (f"{two_seed_shift:.1f}", f"{min(two_seed):.1f}", f"{max(two_seed):.1f}"), r"(by up to ${}$ for the dense starts), so earlier two-seed values should be read as $q\approx{}$--${}$", "audit (U9, U10a)"),
     # §4, §5, conclusions
-    ("§4", "bath share in the discussion", (P(bath_U1),), r"A ${}\%$ contamination", "U11"),
+    ("§4", "bath share in the discussion", (P(bath_U1),), r"the initial massive bath accounts for ${}\%$ of the measured emission for sparse starts", "U11"),
     ("§5", "verdict threshold quoted", ("1.69",), r"$\RG+\sigma\le{}$", "ESPEC_U11 (threshold, not a result)"),
     ("§5", "audit: like-for-like max and R_Gamma", (*sci1(aud_like), *sci1(aud_RG)), r"to $\le{}\times10^{{{}}}$ relative ($\RG$ itself to ${}\times10^{{{}}}$", "audit checks (like-for-like)"),
     ("§5", "exchange-corrected R_Gamma: ours and audit's", (r2(U11["R_Gamma_corr"]["value"]), r2(AUD["U11_Rcorr"][0])), r"moves the exchange-corrected value from ${}$ to ${}$", "U11, audit"),
@@ -208,7 +208,7 @@ ROWS = [
     ("§3.4", "U24 Dstrong: R_Gamma shift and per-length shift", (f"{U24R['delta_vs_D0']['Dstrong']['R_Gamma']['delta'] * 100:.1f}", f"{U24R['delta_vs_D0']['Dstrong']['R_Gamma']['sigma'] * 100:.1f}", P(_perlen)),
      r"the emission ratio moves by ${}\pm{}\%$ because both models respond alike; the emission per unit string length, $\RG/\Rxi$, therefore moves by about ${}\%$", "U24"),
     ("concl.", "per unit length, R_Gamma total", (P(per_len), r2(RG), r2(math.hypot(RGs, SAMP * RG))), r"within ${}\%$ as efficiently, giving $\RG={}\pm{}$", "U10B, U11"),
-    ("concl.", "bath share", (P(bath_RP3), P(bath_U1)), r"(${}$--${}\%$ for sparse starts", "U11"),
+    ("concl.", "bath share", (P(bath_RP3), P(bath_U1)), r"(${}$--${}\%$ for our sparse starts", "U11"),
     # section E of PLAN_REVISION_PRD (19 Oct 2026)
     ("§2", "trace mode m a dx at the end, and at m_r a dx = 0.6", (f"{math.sqrt(VAL['V2']['RP3:heavy_trace']['m2'] / 0.24):.2f}", f"{0.6 * math.sqrt(VAL['V2']['RP3:heavy_trace']['m2'] / 0.24):.2f}"),
      r"the heavier trace mode reaches $m\,a\,dx={}$ at the end; the resolution test below, which lowers it to ${}$, covers it empirically", "u2/validation.json V2"),
@@ -227,9 +227,9 @@ ROWS = [
     ("§3.4", "U16 resolution of R_xi, repeated in the budget", (f"{dres['R_xi']['rel'] * 100:.2f}",), r"resolution moves $\Rxi$ by ${}\%$ and leaves $\RG$ within the sampling systematic", "U16"),
     ("abstract", "q weighted by F", (r2(qF["q0_at_ell5"]), r2(qF["q0_std"])), r"a fit weighted by the spectrum gives ${}\pm{}$; we therefore quote", "audit q_variants"),
     ("§4", "limitation (ii): the per-length agreement", (P(per_len),), r"and the ${}\%$ agreement with U(1) quoted above", "U10B"),
-    ("concl.", "U19b: RP3/U(1) soft yield per string energy (perspective)", (r2(U19B["blocks"]["RP3_3.2"]["Y"] / U19B["blocks"]["U1_3.2"]["Y"]), str(U19B["blocks"]["RP3_3.2"]["n"])),
+    ("§4", "U19b: RP3/U(1) soft yield per string energy (perspective)", (r2(U19B["blocks"]["RP3_3.2"]["Y"] / U19B["blocks"]["U1_3.2"]["Y"]), str(U19B["blocks"]["RP3_3.2"]["n"])),
      r"within a ratio of ${}$, so the denser", "U19B_RESULT"),
-    ("concl.", "U19b: networks per model", (str(min(U19B["blocks"]["RP3_3.2"]["n"], U19B["blocks"]["U1_3.2"]["n"])),), r"(four networks per model at $512^3$, not independently audited)" if min(U19B["blocks"]["RP3_3.2"]["n"], U19B["blocks"]["U1_3.2"]["n"]) == 4 else "?", "U19B_RESULT"),
+    ("§4", "U19b: networks per model", (str(min(U19B["blocks"]["RP3_3.2"]["n"], U19B["blocks"]["U1_3.2"]["n"])),), r"(four networks per model at $512^3$, not independently audited)" if min(U19B["blocks"]["RP3_3.2"]["n"], U19B["blocks"]["U1_3.2"]["n"]) == 4 else "?", "U19B_RESULT"),
 ]
 
 # Set-up or literature uses of numbers that are also results (so they are not in SETUP); matched as fragments.
