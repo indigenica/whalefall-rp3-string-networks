@@ -27,6 +27,10 @@ static inline void mm(double A[4][4], double B[4][4], double C[4][4]) {
    (m_G^2 = EPS_G / v).  Off (0) by default: then nothing is added and the evolution is bit-identical to U2-U16. */
 static double EPS_G = 0.0;
 void set_tilt(double eps) { EPS_G = eps; }
+/* U68 (ESPEC_U68): general quadratic breaking -EPS_G sum_a TW[a] Q_aa (E diagonal, w = E - (tr E/4) 1 + 1/4), RP3 only; masses
+   m_c^2 = EPS_G (TW[0] - TW[c]).  Default (1, 0, 0, 0) and zero weights skipped: then bit-identical to U19-U67. */
+static double TW[4] = {1.0, 0.0, 0.0, 0.0};
+void set_tilt_weights(double w0, double w1, double w2, double w3) { TW[0] = w0; TW[1] = w1; TW[2] = w2; TW[3] = w3; }
 /* gradient dV/dq (10 comps) and potential value */
 static inline double rp3_grad(const double *q, double *g) {
     double Q[4][4], Q2[4][4], M[4][4], T[4][4], W[4][4];
@@ -38,7 +42,7 @@ static inline double rp3_grad(const double *q, double *g) {
     for (int i = 0; i < 4; i++) g[i] = 0.5 * LAM_Z * (tr - 1) + 0.5 * LAMP_Z * T[i][i];
     for (int k = 0; k < 6; k++) g[4 + k] = 0.5 * LAMP_Z * 0.5 * (T[OI[k]][OJ[k]] + T[OJ[k]][OI[k]]) * 2 * ISQ2;
     double V = 0.25 * LAM_Z * (tr - 1) * (tr - 1) + 0.25 * LAMP_Z * trM2;
-    if (EPS_G != 0.0) { g[0] -= EPS_G; V -= EPS_G * q[0]; }
+    if (EPS_G != 0.0) for (int c = 0; c < 4; c++) if (TW[c] != 0.0) { g[c] -= EPS_G * TW[c]; V -= EPS_G * TW[c] * q[c]; }   /* U68 */
     return V;
 }
 static inline double u1_grad(const double *p, double *g) {
@@ -58,6 +62,20 @@ void set_core(double tau_c) { TAU_C = tau_c; }
    width), while the explicit tilt keeps the physical a^2.  Off (0) by default: then a_p = a and nothing changes. */
 static double TAU_F = 0.0;
 void set_core_late(double tau_f) { TAU_F = tau_f; }
+/* U67 (ESPEC_U67): matter-then-radiation background and the curvature coupling xi_Q R of the common action.
+   set_bg_mdrd(a_tr, tau_tr): a = a_tr (tau/tau_tr)^2 for tau <= tau_tr (w = 0), a = a_tr (2 tau/tau_tr - 1) after (w = 1/3),
+   C^1 at tau_tr; it replaces a = s tau.  set_xiq(xi, x0): adds xi R (q - x0 e_trace) to dV/dq (RP3 only), the variation of
+   (xi/2) R Tr[(Q - x0 1)^2], with R = 3 H^2 in the matter era and 0 in radiation.  Both off by default (a_tr = 0, xi = 0):
+   then nothing changes and the evolution is bit-identical to U2-U25. */
+static int BG_MDRD = 0;
+static double BG_ATR = 0.0, BG_TAUTR = 0.0, XI_Q = 0.0, X0_Q = 0.0, RCURV = 0.0;
+void set_bg_mdrd(double a_tr, double tau_tr) { BG_MDRD = (a_tr > 0 && tau_tr > 0); BG_ATR = a_tr; BG_TAUTR = tau_tr; }
+void set_xiq(double xi, double x0) { XI_Q = xi; X0_Q = x0; }
+double a_mdrd(double t) { double x = t / BG_TAUTR; return t <= BG_TAUTR ? BG_ATR * x * x : BG_ATR * (2 * x - 1); }
+static double r_mdrd(double t) {
+    if (!BG_MDRD || XI_Q == 0.0 || t >= BG_TAUTR) return 0.0;
+    double a = a_mdrd(t), H = 2.0 / (a * t); return 3.0 * H * H;
+}
 static void force(int model, int N, const float *f, float *out, double a, double ap) {
     const long V = (long)N * N * N; const int C = model ? 10 : 2; const double a2 = a * a, ap2 = ap * ap;
     #pragma omp parallel for schedule(static)
@@ -71,7 +89,8 @@ static void force(int model, int N, const float *f, float *out, double a, double
                 long i = ((long)z * N + y) * N + x;
                 for (int c = 0; c < C; c++) q[c] = f[c * V + i];
                 if (model) rp3_grad(q, g); else u1_grad(q, g);
-                if (EPS_G != 0.0 && ap2 != a2) g[0] += EPS_G * (1.0 - a2 / ap2);   /* U19b: tilt with a^2, not a_p^2 */
+                if (EPS_G != 0.0 && ap2 != a2) for (int c = 0; c < (model ? 4 : 1); c++) if (model ? TW[c] != 0.0 : 1) g[c] += EPS_G * (model ? TW[c] : 1.0) * (1.0 - a2 / ap2);   /* U19b: tilt with a^2, not a_p^2; U68 weights (RP3) */
+                if (RCURV != 0.0 && model) for (int c = 0; c < C; c++) g[c] += XI_Q * RCURV * (q[c] - (c < 4 ? X0_Q : 0.0));   /* U67 */
                 for (int c = 0; c < C; c++) {
                     const float *fc = f + c * V;
                     double lap = fc[((long)z * N + y) * N + xp] + fc[((long)z * N + y) * N + xm] + fc[((long)z * N + yp) * N + x]
@@ -125,14 +144,16 @@ void damp_massive(int model, int N, const float *f, float *p, double fac) {
 /* evolve nsteps of KDK leapfrog from tau with step dtau; scratch has C*V floats. Minkowski if s<=0 (a=1). */
 void evolve(int model, int N, float *f, float *p, float *scratch, double tau, double dtau, double s, int nsteps) {
     const long V = (long)N * N * N; const int C = model ? 10 : 2; const long n = C * V;
-    #define AOF(t) (s > 0 ? s * (t) : 1.0)
+    #define AOF(t) (BG_MDRD ? a_mdrd(t) : (s > 0 ? s * (t) : 1.0))     /* U67: matter-then-radiation if set */
     #define APF(t) ((s > 0 && TAU_C > 0 && (t) < TAU_C) ? s * TAU_C : (s > 0 && TAU_F > 0 && (t) > TAU_F) ? s * TAU_F : AOF(t))
+    RCURV = r_mdrd(tau);
     force(model, N, f, scratch, AOF(tau), APF(tau));
     for (int k = 0; k < nsteps; k++) {
         double t0 = tau + k * dtau, th = t0 + 0.5 * dtau, t1 = t0 + dtau;
         double ih = 1.0 / (AOF(th) * AOF(th));
         #pragma omp parallel for schedule(static)
         for (long i = 0; i < n; i++) { p[i] += (float)(0.5 * dtau * scratch[i]); f[i] += (float)(dtau * ih * p[i]); }
+        RCURV = r_mdrd(t1);
         force(model, N, f, scratch, AOF(t1), APF(t1));
         #pragma omp parallel for schedule(static)
         for (long i = 0; i < n; i++) p[i] += (float)(0.5 * dtau * scratch[i]);
@@ -159,7 +180,8 @@ static void kick(int model, int N, const float *f, float *p, double a, double ap
                 long i = ((long)z * N + y) * N + x;
                 for (int c = 0; c < C; c++) q[c] = f[c * V + i];
                 if (model) rp3_grad(q, g); else u1_grad(q, g);
-                if (EPS_G != 0.0 && ap2 != a2) g[0] += EPS_G * (1.0 - a2 / ap2);
+                if (EPS_G != 0.0 && ap2 != a2) for (int c = 0; c < (model ? 4 : 1); c++) if (model ? TW[c] != 0.0 : 1) g[c] += EPS_G * (model ? TW[c] : 1.0) * (1.0 - a2 / ap2);   /* U68 */
+                if (RCURV != 0.0 && model) for (int c = 0; c < C; c++) g[c] += XI_Q * RCURV * (q[c] - (c < 4 ? X0_Q : 0.0));   /* U67 */
                 for (int c = 0; c < C; c++) {
                     const float *fc = f + c * V;
                     double lap = fc[((long)z * N + y) * N + xp] + fc[((long)z * N + y) * N + xm] + fc[((long)z * N + yp) * N + x]
@@ -178,10 +200,10 @@ void evolve_lowmem(int model, int N, float *f, float *p, double tau, double dtau
     for (int k = 0; k < nsteps; k++) {
         double t0 = tau + k * dtau, th = t0 + 0.5 * dtau, t1 = t0 + dtau;
         double ih = 1.0 / (AOF(th) * AOF(th));
-        kick(model, N, f, p, AOF(tf), APF(tf), 0.5 * dtau);
+        RCURV = r_mdrd(tf); kick(model, N, f, p, AOF(tf), APF(tf), 0.5 * dtau);
         #pragma omp parallel for schedule(static)
         for (long i = 0; i < n; i++) f[i] += (float)(dtau * ih * p[i]);
-        kick(model, N, f, p, AOF(t1), APF(t1), 0.5 * dtau); tf = t1;
+        RCURV = r_mdrd(t1); kick(model, N, f, p, AOF(t1), APF(t1), 0.5 * dtau); tf = t1;
         if (DAMP_TAU > 0 && t1 < DAMP_TAU && ((long)llround(t1 / dtau)) % DAMP_EVERY == 0)
             damp_massive(model, N, f, p, exp(-DAMP_G * AOF(t1) * dtau * DAMP_EVERY));
     }
