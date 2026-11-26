@@ -170,6 +170,8 @@ ROWS = [
     ("§3.3", "drained/undrained per seed", (r2(1 - bath_RP3), r2(1 - bath_U1), r2(U11["drained_over_undrained_by_seed"]["RP3"]["std"]), r2(U11["drained_over_undrained_by_seed"]["U1"]["std"]), P(bath_RP3), P(bath_U1)),
      r"the drain leaves ${}$ of the $\RP$ emission and ${}$ of the U(1) one (seed-to-seed scatter ${}$ and ${}$): the bath was ${}\%$ and ${}\%$", "U11"),
     ("§3.3", "undrained R_Gamma", (r2(U11["R_Gamma_U6_same_window"]["value"]), r2(U11["R_Gamma_U6_same_window"]["boot_std"])), r"the undrained $\RG={}\pm{}$ was biased low", "U11"),
+    ("§3.4", "drained U(1) exchange: per-seed range (negative)", (f"{max(U11['f_X_U1'].values()) * 100:.1f}", f"{min(U11['f_X_U1'].values()) * 100:.1f}"),
+     r"slightly negative there (${}$ to ${}\%$ of the emission per seed)", "U11 f_X_U1"),
     ("§3.3", "drained U(1) exchange below", (f"{math.ceil(max(abs(v) for v in U11['f_X_U1'].values()) * 200) / 2:.1f}",), r"the measured exchange is below ${}\%$", "U11 f_X_U1"),
     ("§3.3", "fading of the bath", (r2(T7["models"]["RP3"]["slope_mean"]), r2(T7["models"]["RP3"]["slope_sem"]), r2(T7["models"]["U1"]["slope_mean"]), r2(T7["models"]["U1"]["slope_sem"])),
      r"rises by ${}\pm{}$ per unit $\ell$ (U(1): ${}\pm{}$)", "T7"),

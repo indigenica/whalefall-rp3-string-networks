@@ -25,7 +25,7 @@
 \author{Jose Bautista\,\orcidlink{0009-0001-6655-4028}}
 \email{jozebautista@gmail.com}
 \affiliation{Independent researcher}
-\date{November 19, 2026}
+\date{November 26, 2026}
 
 \begin{abstract}
 We simulate networks of global $\Ztwo$ strings whose vacuum manifold is $\RP\simeq{\rm SO}(3)$, produced by a real symmetric-tensor order parameter, and compare them with U(1) axion-string networks evolved in the same code, with the same Goldstone decay constant and core mass, at $576^3$ (U(1) control also at $768^3$, where it passes preregistered scaling gates).
@@ -46,7 +46,7 @@ All verdict-bearing analyses were preregistered (the snapshot-sampling systemati
 Networks of global strings radiate Goldstone bosons, and in the post-inflationary axion scenario that radiation sets a large part of the dark-matter abundance and its phase-space distribution~\cite{GHV2018,GHV2021,Buschmann2022,Hindmarsh2021approach,Saikawa2024,KimParkSon2024,Correia2025spectrum}.
 Almost all of that work concerns U(1) strings; an exception is the Nambu--Goldstone emission of semilocal string networks~\cite{KandaKitajima2025}.
 Non-abelian vacuum manifolds give strings with discrete charges, which can annihilate in pairs rather than unwind, and have several massive modes in the core.
-Scaling of ${\rm SU}(N)/\mathbb{Z}_N$ global-string networks was established recently~\cite{Yamada2026}; their emission was not measured.
+Recent lattice simulations have investigated the scaling of ${\rm SU}(N)/\mathbb{Z}_N$ global-string networks~\cite{Yamada2026}, but, to our knowledge, their Goldstone emission has not yet been quantified in a matched comparison with U(1) networks.
 
 Here we measure, in the same code and with matched decay constant and core mass, the string density and the Goldstone emission of a network with vacuum manifold $\RP\simeq{\rm SO}(3)\simeq{\rm SU}(2)/\Ztwo$ relative to a U(1) network.
 The model arises in a toy cosmology in which the string network, through its collapse, feeds a pseudo-Goldstone dark-matter component~\cite{whalefall_repo}, but the results below do not depend on that model.
@@ -173,10 +173,10 @@ With the bath drained (six $\RP$ and four U(1) seeds, $576^3$),
 \RG&=1.56\pm0.09\,({\rm stat})\pm0.08\,({\rm sampling}),\\
 \Rxi&=1.61\pm0.06,
 \end{align}
-that is $\RG=1.56\pm0.12$ with the statistical and snapshot-sampling errors combined, and $\RG=1.54\pm0.09\,({\rm stat})$ when the measured U(1) exchange is subtracted ($1.56$ with the audit's definition of the per-seed exchange fraction).
+that is $\RG=1.56\pm0.12$ with the statistical and snapshot-sampling errors combined, and $\RG=1.54\pm0.09\,({\rm stat})$ when the measured U(1) exchange, slightly negative there ($-0.3$ to $-2.3\%$ of the emission per seed), is subtracted, which raises the U(1) emission ($1.56$ with the audit's definition of the per-seed exchange fraction).
 A preregistered test of the drain at $384^3$ (three seeds) bounds its effect on the ratio: ending it at $\ell_d=3.4$ or $4.1$ instead of $3.8$, or halving or doubling its rate, changes $\RG$ by at most $1.9\pm1.4\%$, which bounds the dependence at the preregistered $5\%$, so we add no drain systematic; the time step stays within its preregistered $2\%$; and in the undrained tests at $\ell\le4.56$ resolution moves $\Rxi$ by $-0.26\%$ and leaves $\RG$ within the sampling systematic, while the volume test shows no dependence larger than its $\approx5\%$ errors. Not quantified are transients beyond the window and the extrapolation to larger $\ell$.
 At $512^3$ with two seeds per protocol the drained ratio is $1.63\pm0.02$ for sparse and $1.76\pm0.09$ for dense starts, a protocol gap of $7\%$ against $20\%$ without draining.
-Per unit string length the $\RP$ network emits within $13\%$ of U(1) from both sides of the attractor ($\RG/\Rxi=0.97$ from below, $0.87$ from above): the non-abelian network is not radiatively suppressed.
+Per unit string length the $\RP$ network emits within $13\%$ of U(1) from both sides of the attractor ($\RG/\Rxi=0.97$ from below, $0.87$ from above): we find no evidence of substantial radiative suppression per unit string length within the simulated window.
 The late dense starts (three seeds per model, $\xi_i=3$, $3$ and $6$ at $\ell_i=3.5$, drained up to $\ell_d=3.8$ as the others) give $\RG=1.30\pm0.14$ and $q_{\RP}(\ell=5)=0.19\pm0.04$ in the same window; they are only $\approx1.5$ e-folds old there, and we read these values as transient rather than as a second measurement of the attractor emission.
 
 For the spectral slope the drained networks give $q_{\RP}(\ell=5)=0.87\pm0.06$, with a weak decrease with $\ell$ ($dq/d\ell=-0.32\pm0.18$), with the window converted to lattice momenta at the end of each snapshot pair.
@@ -227,7 +227,7 @@ The author takes full responsibility for the content.
 
 \section{Conclusions}
 
-A global-string network with vacuum manifold $\RP\simeq{\rm SO}(3)$ is $\approx1.6$ times denser than a U(1) network with the same decay constant and core mass over the simulated range ($\ell\le5.66$), for every protocol tested, including sparse starts and late dense ones that bracket the density; the asymptotic ratio is not determined. Per unit length it radiates Goldstones within $13\%$ as efficiently, giving $\RG=1.56\pm0.12$ (statistical and snapshot-sampling errors combined) once the initial massive bath is removed.
+A global-string network with vacuum manifold $\RP\simeq{\rm SO}(3)$ is $\approx1.6$ times denser than a U(1) network with the same decay constant and core mass over the simulated range ($\ell\le5.66$), for every protocol tested, including sparse starts and late dense ones that bracket the density; the asymptotic ratio is not determined. Per unit length it radiates Goldstones within $13\%$ as efficiently, giving $\RG=1.56\pm0.12$ (statistical and snapshot-sampling errors combined) after draining the initial massive bath.
 The bath, counted as emission by the standard kinetic estimator, is a sizeable systematic at accessible $\ell$ ($19$--$28\%$ for our sparse starts). It accounts for more than half of the measured emission in the dense U(1) comparison, and the exploratory dense $\RP$ comparison points to a similar fraction.
 For networks approaching the attractor from below the emission spectrum is close to scale invariant, with a slope at $\ell=5$ that is compatible with $1$ once the estimator convention is accounted for; the late dense starts, still transient, give a much harder spectrum.
 
